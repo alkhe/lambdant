@@ -1,19 +1,18 @@
-const env = new Map([
-	['+', a => b => a + b],
-	['-', a => b => a - b],
-	['neg', x => -x],
-	['inc', x => x + 1],
-	['dec', x => x - 1]
-])
+const { get, extend } = require('./env')
 
-function ev(node) {
+function ev(node, env) {
 	switch (node.type) {
 		case 'ID':
-			return env.get(node.name)
+			return get(env, node.name)
 		case 'VALUE':
 			return node.value
 		case 'EXPR':
-			return ev(node.fn)(ev(node.arg))
+			return ev(node.fn, env)(ev(node.arg, env))
+		case 'LAMBDA':
+			return x => ev(
+				node.expr,
+				extend(env, [[node.arg, x]])
+			)
 	}
 	throw new Error('unrecognized node type')
 }

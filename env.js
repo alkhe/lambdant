@@ -6,7 +6,8 @@ const root = {
 		['minus', a => b => a - b],
 		['neg', x => -x],
 		['inc', x => x + 1],
-		['dec', x => x - 1]
+		['dec', x => x - 1],
+		['debug', x => (console.log(x), x)]
 	]),
 	parent: null
 }

@@ -1,19 +1,19 @@
-%parse-param env
+%parse-param af
 %start program
 
 %%
 
 program
-	: value EOF { return $1 }
+	: expr EOF { return $1 }
+	;
+
+expr
+	: expr value -> af.expr($1, $2)
+	| value
 	;
 
 value
-	: value atom -> $1($2)
-	| atom
-	;
-
-atom
-	: NUM -> Number($1)
-	| ID -> env.get($1)
-	| LPAREN value RPAREN -> $2
+	: NUM -> af.value(Number($1))
+	| ID -> af.id($1)
+	| LPAREN expr RPAREN -> $2
 	;

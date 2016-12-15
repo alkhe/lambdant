@@ -1,13 +1,25 @@
 const { parse } = require('./parser')
+const ev = require('./eval')
 
-const env = new Map([
-	['+', a => b => a + b],
-	['-', a => b => a - b],
-	['neg', x => -x],
-	['inc', x => x + 1],
-	['dec', x => x - 1]
-])
+// ast factories
+const af = {
+	id: name => ({
+		type: 'ID',
+		name
+	}),
+	value: value => ({
+		type: 'VALUE',
+		value
+	}),
+	expr: (fn, arg) => ({
+		type: 'EXPR',
+		fn,
+		arg
+	})
+}
 
-const result = parse('inc (inc 2)', env)
+const ast = parse('neg (inc 2)', af)
+const result = ev(ast)
 
-console.log(result)
+console.dir(ast, { depth: null, colors: true })
+console.log('result', result)

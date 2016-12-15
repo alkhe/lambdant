@@ -75,10 +75,10 @@ var parser = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,4],$V1=[1,5],$V2=[1,6],$V3=[5,7,8,9,10];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"program":3,"value":4,"EOF":5,"atom":6,"NUM":7,"ID":8,"LPAREN":9,"RPAREN":10,"$accept":0,"$end":1},
+symbols_: {"error":2,"program":3,"expr":4,"EOF":5,"value":6,"NUM":7,"ID":8,"LPAREN":9,"RPAREN":10,"$accept":0,"$end":1},
 terminals_: {2:"error",5:"EOF",7:"NUM",8:"ID",9:"LPAREN",10:"RPAREN"},
 productions_: [0,[3,2],[4,2],[4,1],[6,1],[6,1],[6,3]],
-performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */, env) {
+performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */, af) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
@@ -87,13 +87,13 @@ case 1:
  return $$[$0-1] 
 break;
 case 2:
-this.$ = $$[$0-1]($$[$0]);
+this.$ = af.expr($$[$0-1], $$[$0]);
 break;
 case 4:
-this.$ = Number($$[$0]);
+this.$ = af.value(Number($$[$0]));
 break;
 case 5:
-this.$ = env.get($$[$0]);
+this.$ = af.id($$[$0]);
 break;
 case 6:
 this.$ = $$[$0-1];

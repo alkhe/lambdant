@@ -1,7 +1,9 @@
+const escape = id => id.replace(/\+/g, '_')
+
 const root = {
 	items: new Map([
-		['+', a => b => a + b],
-		['-', a => b => a - b],
+		['plus', a => b => a + b],
+		['minus', a => b => a - b],
 		['neg', x => -x],
 		['inc', x => x + 1],
 		['dec', x => x - 1]

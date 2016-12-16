@@ -69,7 +69,11 @@ const gen = node => {
 				return block_statement(es_asts)
 			} else if (exprs.length === 1) {
 				const expr_ast = gen(exprs[0])
-				return node.void ? unary_expression('void', true, expr_ast) : expr_ast
+				return expr_ast.type === 'VariableDeclaration'
+					? block_statement([expr_ast])
+					: node.void
+						? unary_expression('void', true, expr_ast)
+						: expr_ast
 			}
 
 			return block_statement([])

@@ -46,6 +46,7 @@ lookup
 value
 	: NUM -> af.number($1)
 	| UNIT -> af.value(null)
+	| STRING -> af.value(eval($1))
 	| lookup
 	| LPAREN expr RPAREN -> $2
 	| lambda

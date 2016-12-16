@@ -8,6 +8,13 @@ local				\@
 equals				\=
 unit				\(\)
 newline				\n
+
+quote				\'
+normal-char			[^\'\b\f\n\r\t\v]
+escape-char			\\[\'\\bfnrtv]
+string-char			{normal-char} | {escape-char}
+string-tail			{string-char}* {quote}
+
 scomment			\#
 scomment-char		[^\n]
 scomment-text		{scomment-char}*\n
@@ -17,7 +24,7 @@ id-general-char		{id-base-char} | {num}
 id					{id-base-char} {id-general-char}* {id-base-char}* {id-general-char}*
 number				{sign}? {num}+ ('.' {num}+)?
 
-%x scomment
+%x scomment string
 
 %%
 
@@ -37,6 +44,13 @@ number				{sign}? {num}+ ('.' {num}+)?
 
 {scomment}					this.begin('scomment')
 <scomment>{scomment-text}	this.popState()
+
+{quote}						this.begin('string')
+<string>{string-tail}		%{
+								this.popState()
+								yytext = `'` + yytext
+								return 'STRING'
+							%}
 
 <<EOF>>						return 'EOF'
 .							return 'INVALID'

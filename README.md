@@ -32,7 +32,19 @@ add 2 3 -> 5
 [x y: plus x y] 2 3 -> 5
 ```
 
-### Combinators
+### Assignment
+```js
+@name = 'John';
+name -> 'John'
+```
+
+### Members
+```js
+@- = require 'lodash';
+-:now() -> 1481926731041
+```
+
+### Native Combinators
 
 **T-combinator** (`*`)
 - reverse application
@@ -54,6 +66,11 @@ plus 2 3 -> 5
 
 ## Scripts
 
-`node cli-run file.lm` runs a Lambdant script.
+`node tools/dump file.lm` ouptuts the source, Lambdant ast, and estree ast of a Lambdant script.
 
-`node cli-compile file.lm` compiles a Lambdant script, printing the Javascript on stdout, can be written to a Javascript file or piped to node
+`node tools/compile file.lm` compiles a Lambdant script, printing the Javascript on stdout, can be written to a Javascript file or piped to node
+
+## TODO
+- add object and array literals
+- add multivariate function calls
+- add more combinators

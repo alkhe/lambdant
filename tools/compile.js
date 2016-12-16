@@ -1,12 +1,12 @@
-const { parse } = require('./parser')
-const gen = require('./gen')
 const { generate } = require('escodegen')
 const { readFileSync } = require('fs')
-const factory = require('./factory')
+const { parse } = require('../src/parser')
+const gen = require('../src/gen')
+const factory = require('../src/factory')
 
 const files = process.argv.slice(2)
 
-const out = [readFileSync('./std.js', 'utf8')].concat(
+const out = [readFileSync('./lang/std.js', 'utf8')].concat(
 	files
 		.map(f => readFileSync(f, 'utf8'))
 		.map(source => parse(source, factory))

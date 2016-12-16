@@ -1,8 +1,8 @@
-const { parse } = require('./parser')
-const gen = require('./gen')
 const { generate } = require('escodegen')
 const { readFileSync } = require('fs')
-const factory = require('./factory')
+const { parse } = require('../src/parser')
+const gen = require('../src/gen')
+const factory = require('../src/factory')
 
 const files = process.argv.slice(2)
 const peek = x => (console.dir(x, { depth: null, colors: true }), x)

@@ -8,10 +8,17 @@ program
 	;
 
 sequence
+	: normal-sequence
+	| void-sequence
+	;
+
+normal-sequence
+	: void-sequence statement -> af.seqadd($1, $2)
+	;
+
+void-sequence
 	: -> af.nullseq
-	| sequence SEQ statement -> af.seqadd($1, $3)
-	| sequence SEQ -> af.voidseq($1)
-	| statement -> af.seqadd(af.nullseq, $1)
+	| normal-sequence SEQ -> af.voidseq($1)
 	;
 
 statement

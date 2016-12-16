@@ -42,12 +42,12 @@ const af = {
 	seqadd: (seq, statement) => ({
 		type: 'SEQ',
 		exprs: seq.exprs.concat(statement),
-		void: seq.void
+		void: false
 	}),
 	nullseq: {
 		type: 'SEQ',
 		exprs: [],
-		void: false
+		void: true
 	},
 	voidseq: seq => ({
 		type: 'SEQ',

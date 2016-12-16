@@ -3,6 +3,8 @@ const identifier = name => ({ type: 'Identifier', name })
 const array_expression = elements => ({ type: 'ArrayExpression', elements })
 const call_expression = (callee, arguments) => ({ type: 'CallExpression', callee, arguments })
 const arrow_function_expression = (params, body) => ({ type: 'ArrowFunctionExpression', params, body })
+const block_statement = body => ({ type: 'BlockStatement', body })
+const expression_statement = expression => ({ type: 'ExpressionStatement', expression })
 
 const gen = node => {
 	switch (node.type) {
@@ -20,6 +22,8 @@ const gen = node => {
 				[identifier(node.arg)],
 				gen(node.expr)
 			)
+		case 'SEQ':
+			return block_statement(node.exprs.map(gen).map(expression_statement))
 	}
 	throw new Error('unrecognized node type')
 }

@@ -4,7 +4,12 @@
 %%
 
 program
-	: expr EOF { return $1 }
+	: sequence EOF { return $1 }
+	;
+
+sequence
+	: sequence SEQ expr -> ($1.exprs.push($3), $1)
+	| expr -> af.seq($1)
 	;
 
 expr

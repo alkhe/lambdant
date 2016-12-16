@@ -13,6 +13,15 @@ function ev(node, env) {
 				node.expr,
 				extend(env, [[node.arg, x]])
 			)
+		case 'SEQ': {
+			const { exprs } = node
+
+			for (let i = 0; i < exprs.length - 1; i++) {
+				ev(exprs[i], env)
+			}
+
+			return ev(exprs[exprs.length - 1], env)
+		}
 	}
 	throw new Error('unrecognized node type')
 }

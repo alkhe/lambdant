@@ -3,6 +3,7 @@ sign				[\-\+]
 num					[0-9]
 arrow				\:
 infix				\#
+seq					\;
 
 id-base-char		{alpha} | {sign}
 id-general-char		{id-base-char} | {num}
@@ -16,6 +17,7 @@ number				{sign}? {num}+ ('.' {num}+)?
 {id}				return 'ID'
 {arrow}				return 'ARROW'
 {infix}				return 'INFIX'
+{seq}				return 'SEQ'
 '('					return 'LPAREN'
 ')'					return 'RPAREN'
 '['					return 'LSQUARE'

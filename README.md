@@ -53,4 +53,5 @@ plus 2 3 -> 5
 ## Scripts
 
 `node cli-run file.lm` runs a Lambdant script.
+
 `node cli-compile file.lm` compiles a Lambdant script, printing the Javascript on stdout, can be written to a Javascript file or piped to node

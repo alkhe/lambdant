@@ -26,6 +26,10 @@ const af = {
 		type: 'LAMBDA',
 		arg,
 		expr
+	}),
+	seq: expr => ({
+		type: 'SEQ',
+		exprs: [expr]
 	})
 }
 

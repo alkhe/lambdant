@@ -4,6 +4,8 @@ num					[0-9]
 arrow				\:
 infix				\#
 seq					\;
+local				\@
+equals				\=
 
 id-base-char		{alpha} | {sign}
 id-general-char		{id-base-char} | {num}
@@ -18,6 +20,8 @@ number				{sign}? {num}+ ('.' {num}+)?
 {arrow}				return 'ARROW'
 {infix}				return 'INFIX'
 {seq}				return 'SEQ'
+{local}				return 'LOCAL'
+{equals}			return 'EQUALS'
 '('					return 'LPAREN'
 ')'					return 'RPAREN'
 '['					return 'LSQUARE'

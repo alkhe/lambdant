@@ -8,8 +8,13 @@ program
 	;
 
 sequence
-	: sequence SEQ expr -> ($1.exprs.push($3), $1)
-	| expr -> af.seq($1)
+	: sequence SEQ statement -> ($1.exprs.push($3), $1)
+	| statement -> af.seq($1)
+	;
+
+statement
+	: LOCAL lookup EQUALS expr -> af.assign($2, $4)
+	| expr
 	;
 
 expr
@@ -18,9 +23,13 @@ expr
 	| value
 	;
 
+lookup
+	: ID -> af.id($1)
+	;
+
 value
 	: NUM -> af.value(Number($1))
-	| ID -> af.id($1)
+	| lookup
 	| LPAREN expr RPAREN -> $2
 	| lambda
 	;

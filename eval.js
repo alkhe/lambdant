@@ -1,4 +1,4 @@
-const { get, extend } = require('./env')
+const { get, set, extend } = require('./env')
 
 function ev(node, env) {
 	switch (node.type) {
@@ -8,6 +8,11 @@ function ev(node, env) {
 			return node.value
 		case 'EXPR':
 			return ev(node.fn, env)(ev(node.arg, env))
+		case 'ASSIGN': {
+			const result = ev(node.expr, env)
+			set(env, node.id.name, result)
+			return result
+		}
 		case 'LAMBDA':
 			return x => ev(
 				node.expr,

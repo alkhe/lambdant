@@ -5,6 +5,7 @@ const call_expression = (callee, arguments) => ({ type: 'CallExpression', callee
 const arrow_function_expression = (params, body) => ({ type: 'ArrowFunctionExpression', params, body })
 const block_statement = body => ({ type: 'BlockStatement', body })
 const expression_statement = expression => ({ type: 'ExpressionStatement', expression })
+const assignment_expression = (left, right) => ({ type: 'AssignmentExpression', operator: '=', left, right })
 
 const gen = node => {
 	switch (node.type) {
@@ -17,6 +18,8 @@ const gen = node => {
 				gen(node.fn),
 				[gen(node.arg)]
 			)
+		case 'ASSIGN':
+			return assignment_expression(gen(node.id), gen(node.expr))
 		case 'LAMBDA':
 			return arrow_function_expression(
 				[identifier(node.arg)],

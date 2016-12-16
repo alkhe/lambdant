@@ -30,6 +30,11 @@ const af = {
 	seq: expr => ({
 		type: 'SEQ',
 		exprs: [expr]
+	}),
+	assign: (id, expr) => ({
+		type: 'ASSIGN',
+		id,
+		expr
 	})
 }
 

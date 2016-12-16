@@ -4,4 +4,4 @@ build:
 	jison grammar.g lexer.l -o parser.js
 
 run:
-	node interface
+	node cli-run example.lm

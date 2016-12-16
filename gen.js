@@ -6,7 +6,7 @@ const array_expression = elements => ({ type: 'ArrayExpression', elements })
 
 const call_expression = (callee, arguments) => ({ type: 'CallExpression', callee, arguments })
 
-const arrow_function_expression = (params, body) => ({ type: 'ArrowFunctionExpression', params, body })
+const arrow_function_expression = (params, body, expression) => ({ type: 'ArrowFunctionExpression', params, body, expression })
 
 const block_statement = body => ({ type: 'BlockStatement', body })
 
@@ -49,33 +49,52 @@ const gen = node => {
 			return variable_declaration(gen(node.id), gen(node.expr))
 		case 'ASSIGN':
 			return assignment_expression(gen(node.id), gen(node.expr))
-		case 'LAMBDA':
+		case 'LAMBDA': {
+			const body_ast = gen(node.expr)
 			return arrow_function_expression(
 				[gen(node.arg)],
-				gen(node.expr)
+				body_ast,
+				body_ast.type !== 'BlockStatement'
 			)
-		case 'THUNK':
+		}
+		case 'THUNK': {
+			const body_ast = gen(node.expr)
 			return arrow_function_expression(
 				[],
-				gen(node.expr)
+				body_ast,
+				body_ast.type !== 'BlockStatement'
 			)
+		}
 		case 'SEQ': {
-			const asts = node.exprs.map(gen)
-			const es_asts = []
-			for (let i = 0; i < asts.length - 1; i++) {
-				es_asts.push(expression_statement(asts[i]))
+			const { exprs } = node
+
+			if (exprs.length > 1) {
+				const es_asts = []
+
+				for (let i = 0; i < exprs.length - 1; i++) {
+					es_asts.push(gen(exprs[i]))
+				}
+
+				const last_ast = gen(exprs[exprs.length - 1])
+
+				es_asts.push(node.void ? last_ast : return_statement(last_ast))
+
+				return block_statement(es_asts)
+			} else if (exprs.length === 1) {
+				const expr_ast = gen(exprs[0])
+				return node.void ? unary_expression('void', true, expr_ast) : expr_ast
 			}
-			es_asts.push(
-				(node.void ? expression_statement : return_statement)(asts[asts.length - 1])
-			)
-			return block_statement(es_asts)
+
+			return block_statement([])
 		}
 	}
 	throw new Error(`unrecognized node type: ${ node.type }`)
 }
 
-module.exports = node =>
-	call_expression(
-		arrow_function_expression([], gen(node)),
+module.exports = node => {
+	const body_ast = gen(node)
+	return call_expression(
+		arrow_function_expression([], body_ast, body_ast.type !== 'BlockStatement'),
 		[]
 	)
+}

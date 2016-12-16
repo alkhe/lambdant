@@ -35,10 +35,10 @@ const af = {
 		type: 'THUNK',
 		expr
 	}),
-	seq: exprs => ({
+	seq: (exprs, v) => ({
 		type: 'SEQ',
 		exprs,
-		void: false
+		void: v
 	}),
 	nullseq: seq => (seq.void = true, seq),
 	declare: id => ({

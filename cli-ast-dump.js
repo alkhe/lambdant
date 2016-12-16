@@ -9,6 +9,7 @@ const peek = x => (console.dir(x, { depth: null, colors: true }), x)
 
 files
 	.map(f => readFileSync(f, 'utf8'))
+	.map(peek)
 	.map(source => parse(source, factory))
 	.map(peek)
 	.map(gen)

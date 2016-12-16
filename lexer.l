@@ -7,11 +7,17 @@ seq					\;
 local				\@
 equals				\=
 unit				\(\)
+newline				\n
+scomment			\#
+scomment-char		[^\n]
+scomment-text		{scomment-char}*\n
 
 id-base-char		{alpha} | {sign}
 id-general-char		{id-base-char} | {num}
 id					{id-base-char} {id-general-char}* {id-base-char}* {id-general-char}*
 number				{sign}? {num}+ ('.' {num}+)?
+
+%x scomment
 
 %%
 
@@ -28,6 +34,9 @@ number				{sign}? {num}+ ('.' {num}+)?
 ')'							return 'RPAREN'
 '['							return 'LSQUARE'
 ']'							return 'RSQUARE'
+
+{scomment}					this.begin('scomment')
+<scomment>{scomment-text}	this.popState()
 
 <<EOF>>						return 'EOF'
 .							return 'INVALID'

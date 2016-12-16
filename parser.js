@@ -87,7 +87,7 @@ case 1:
  return $$[$0-1] 
 break;
 case 2:
-this.$ = af.seq([]);
+this.$ = af.seq([], true);
 break;
 case 3:
 this.$ = ($$[$0-2].exprs.push($$[$0]), $$[$0-2]);
@@ -96,7 +96,7 @@ case 4:
 this.$ = af.nullseq($$[$0-1]);
 break;
 case 5:
-this.$ = af.seq([$$[$0]]);
+this.$ = af.seq([$$[$0]], false);
 break;
 case 10:
 this.$ = af.declare($$[$0]);
@@ -645,14 +645,18 @@ case 11:return 23
 break;
 case 12:return 26
 break;
-case 13:return 5
+case 13:this.begin('scomment')
 break;
-case 14:return 'INVALID'
+case 14:this.popState()
+break;
+case 15:return 5
+break;
+case 16:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:(([\-\+])?([0-9])+(\.([0-9])+)?))/,/^(?:((([A-Za-z\$])|([\-\+]))((([A-Za-z\$])|([\-\+]))|([0-9]))*(([A-Za-z\$])|([\-\+]))*((([A-Za-z\$])|([\-\+]))|([0-9]))*))/,/^(?:(:))/,/^(?:(\*))/,/^(?:(;))/,/^(?:(@))/,/^(?:(=))/,/^(?:(\(\)))/,/^(?:\()/,/^(?:\))/,/^(?:\[)/,/^(?:\])/,/^(?:$)/,/^(?:.)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:(([\-\+])?([0-9])+(\.([0-9])+)?))/,/^(?:((([A-Za-z\$])|([\-\+]))((([A-Za-z\$])|([\-\+]))|([0-9]))*(([A-Za-z\$])|([\-\+]))*((([A-Za-z\$])|([\-\+]))|([0-9]))*))/,/^(?:(:))/,/^(?:(\*))/,/^(?:(;))/,/^(?:(@))/,/^(?:(=))/,/^(?:(\(\)))/,/^(?:\()/,/^(?:\))/,/^(?:\[)/,/^(?:\])/,/^(?:(#))/,/^(?:(([^\n])*\n))/,/^(?:$)/,/^(?:.)/],
+conditions: {"scomment":{"rules":[14],"inclusive":false},"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,15,16],"inclusive":true}}
 });
 return lexer;
 })();

@@ -8,10 +8,10 @@ program
 	;
 
 sequence
-	: -> af.seq([])
+	: -> af.seq([], true)
 	| sequence SEQ statement -> ($1.exprs.push($3), $1)
 	| sequence SEQ -> af.nullseq($1)
-	| statement -> af.seq([$1])
+	| statement -> af.seq([$1], false)
 	;
 
 statement

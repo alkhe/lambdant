@@ -21,12 +21,21 @@ const variable_declaration = (left, right) => ({
 const variable_declarator = (id, init) => ({ type: 'VariableDeclarator', id, init })
 
 const assignment_expression = (left, right) => ({ type: 'AssignmentExpression', operator: '=', left, right })
+
 const return_statement = argument => ({ type: 'ReturnStatement', argument })
+
+const unary_expression = (operator, prefix, argument) => ({ type: 'UnaryExpression', operator, prefix, argument })
 
 const gen = node => {
 	switch (node.type) {
 		case 'ID':
 			return identifier(node.name)
+		case 'NUMBER': {
+			const { value } = node
+			return value < 0
+				? unary_expression('-', true, literal(-value))
+				: literal(value)
+		}
 		case 'VALUE':
 			return literal(node.value)
 		case 'EXPR':
@@ -42,7 +51,7 @@ const gen = node => {
 			return assignment_expression(gen(node.id), gen(node.expr))
 		case 'LAMBDA':
 			return arrow_function_expression(
-				[identifier(node.arg)],
+				[gen(node.arg)],
 				gen(node.expr)
 			)
 		case 'THUNK':

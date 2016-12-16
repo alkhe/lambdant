@@ -1,9 +1,0 @@
-@main = [:
-	@square = [x: x #times x];
-	@w;
-	w = 2;
-	w = square 5;
-	debug (7 #[x y: x #plus y] 5);
-	debug w
-];
-main()

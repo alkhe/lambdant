@@ -1,0 +1,5 @@
+@- = 5;
+debug 5;
+
+@the-answer = 42;
+debug the-answer

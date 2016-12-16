@@ -1,10 +1,7 @@
-all: build run
+all: build example
 
 build:
 	jison grammar.g lexer.l -o parser.js
 
-run:
-	node cli-run example.lm
-
 example:
-	node cli-compile example.lm | node
+	node cli-compile examples/main.lm | node

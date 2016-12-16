@@ -8,9 +8,10 @@ program
 	;
 
 sequence
-	: sequence SEQ statement -> ($1.exprs.push($3), $1)
+	: -> af.seq([])
+	| sequence SEQ statement -> ($1.exprs.push($3), $1)
 	| sequence SEQ -> af.nullseq($1)
-	| statement -> af.seq($1)
+	| statement -> af.seq([$1])
 	;
 
 statement
@@ -43,7 +44,7 @@ lookup
 	;
 
 value
-	: NUM -> af.value(Number($1))
+	: NUM -> af.number($1)
 	| UNIT -> af.value(null)
 	| lookup
 	| LPAREN expr RPAREN -> $2
@@ -51,11 +52,11 @@ value
 	;
 
 lambda
-	: LSQUARE idlist ARROW sequence RSQUARE -> af.fn($2, $4)
+	: LSQUARE id-list ARROW sequence RSQUARE -> af.fn($2, $4)
 	| LSQUARE ARROW sequence RSQUARE -> af.thunk($3)
 	;
 
-idlist
-	: idlist ID -> $1.concat($2)
-	| ID -> [$1]
+id-list
+	: id-list lookup -> $1.concat($2)
+	| lookup -> [$1]
 	;

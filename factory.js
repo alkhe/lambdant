@@ -1,9 +1,13 @@
-const escape = id => id.replace(/\+/g, '_')
+const escape = id => id.replace(/\-/g, '_')
 
 const af = {
 	id: name => ({
 		type: 'ID',
 		name: escape(name)
+	}),
+	number: n => ({
+		type: 'NUMBER',
+		value: Number(n)
 	}),
 	value: value => ({
 		type: 'VALUE',
@@ -31,9 +35,9 @@ const af = {
 		type: 'THUNK',
 		expr
 	}),
-	seq: expr => ({
+	seq: exprs => ({
 		type: 'SEQ',
-		exprs: [expr],
+		exprs,
 		void: false
 	}),
 	nullseq: seq => (seq.void = true, seq),

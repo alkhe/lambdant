@@ -6,6 +6,7 @@ infix				\#
 seq					\;
 local				\@
 equals				\=
+unit				\(\)
 
 id-base-char		{alpha} | {sign}
 id-general-char		{id-base-char} | {num}
@@ -22,6 +23,7 @@ number				{sign}? {num}+ ('.' {num}+)?
 {seq}				return 'SEQ'
 {local}				return 'LOCAL'
 {equals}			return 'EQUALS'
+{unit}				return 'UNIT'
 '('					return 'LPAREN'
 ')'					return 'RPAREN'
 '['					return 'LSQUARE'

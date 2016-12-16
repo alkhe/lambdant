@@ -9,12 +9,27 @@ program
 
 sequence
 	: sequence SEQ statement -> ($1.exprs.push($3), $1)
+	| sequence SEQ -> af.nullseq($1)
 	| statement -> af.seq($1)
 	;
 
 statement
-	: LOCAL lookup EQUALS expr -> af.assign($2, $4)
+	: declaration
+	| definition
+	| assignment
 	| expr
+	;
+
+declaration
+	: LOCAL lookup -> af.declare($2)
+	;
+
+definition
+	: LOCAL lookup EQUALS expr -> af.define($2, $4)
+	;
+
+assignment
+	: lookup EQUALS expr -> af.assign($1, $3)
 	;
 
 expr
@@ -29,13 +44,15 @@ lookup
 
 value
 	: NUM -> af.value(Number($1))
+	| UNIT -> af.value(null)
 	| lookup
 	| LPAREN expr RPAREN -> $2
 	| lambda
 	;
 
 lambda
-	: LSQUARE idlist ARROW expr RSQUARE -> af.fn($2, $4)
+	: LSQUARE idlist ARROW sequence RSQUARE -> af.fn($2, $4)
+	| LSQUARE ARROW sequence RSQUARE -> af.thunk($3)
 	;
 
 idlist

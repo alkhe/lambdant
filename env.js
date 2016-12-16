@@ -4,6 +4,8 @@ const root = {
 	items: new Map([
 		['plus', a => b => a + b],
 		['minus', a => b => a - b],
+		['times', a => b => a * b],
+		['div', a => b => a / b],
 		['neg', x => -x],
 		['inc', x => x + 1],
 		['dec', x => x - 1],

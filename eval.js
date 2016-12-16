@@ -18,6 +18,11 @@ function ev(node, env) {
 				node.expr,
 				extend(env, [[node.arg, x]])
 			)
+		case 'THUNK':
+			return () => ev(
+				node.expr,
+				extend(env, [[node.arg, x]])
+			)
 		case 'SEQ': {
 			const { exprs } = node
 
@@ -25,10 +30,13 @@ function ev(node, env) {
 				ev(exprs[i], env)
 			}
 
-			return ev(exprs[exprs.length - 1], env)
+			const result = ev(exprs[exprs.length - 1], env)
+
+			if (!node.void) return result
+			return
 		}
 	}
-	throw new Error('unrecognized node type')
+	throw new Error(`unrecognized node type: ${ node.type }`)
 }
 
 module.exports = ev

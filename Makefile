@@ -1,7 +1,7 @@
 all: build example
 
 build:
-	jison grammar.g lexer.l -o parser.js
+	node ./node_modules/jison/lib/cli.js grammar.g lexer.l -o parser.js
 
 example:
 	node cli-compile examples/main.lm | node

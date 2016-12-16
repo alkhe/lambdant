@@ -1,0 +1,37 @@
+{
+  "name": "lambdant",
+  "version": "0.0.1",
+  "description": "A Javascript dialect for modern functional programming.",
+  "main": "cli-compile.js",
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edge/lambdant.git"
+  },
+  "keywords": [
+    "lambdant",
+    "lambda",
+    "javascript",
+    "compiler",
+    "babel",
+    "transpiler",
+    "code",
+    "parser",
+    "lexer",
+    "programming"
+  ],
+  "author": "synchronous",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edge/lambdant/issues"
+  },
+  "homepage": "https://github.com/edge/lambdant#readme",
+  "dependencies": {
+    "escodegen": "^1.8.1"
+  },
+  "devDependencies": {
+    "jison": "^0.4.17"
+  }
+}

@@ -33,8 +33,13 @@ assignment
 	: lookup EQUALS expr -> af.assign($1, $3)
 	;
 
-expr
+call
 	: expr value -> af.expr($1, $2)
+	| expr BANG -> af.bangexpr($1)
+	;
+
+expr
+	: call
 	| expr INFIX value -> af.expr($3, $1)
 	| value
 	;
@@ -47,14 +52,14 @@ value
 	: NUM -> af.number($1)
 	| UNIT -> af.value(null)
 	| STRING -> af.value(eval($1))
-	| value ARROW-OR-ACCESS lookup -> af.access($1, $3, false)
 	| lookup
+	| value ARROW-OR-ACCESS lookup -> af.access($1, $3, false)
 	| LPAREN expr RPAREN -> $2
 	| lambda
 	;
 
 lambda
-	: LSQUARE id-list ARROW-OR-ACCESS  sequence RSQUARE -> af.fn($2, $4)
+	: LSQUARE id-list ARROW-OR-ACCESS sequence RSQUARE -> af.fn($2, $4)
 	| LSQUARE ARROW-OR-ACCESS  sequence RSQUARE -> af.thunk($3)
 	;
 

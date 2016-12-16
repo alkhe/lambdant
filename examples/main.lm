@@ -5,4 +5,4 @@
 	@$25 = square (2 *plus 3);
 	log $25
 ];
-main()
+main!

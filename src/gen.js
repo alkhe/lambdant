@@ -33,6 +33,11 @@ const gen = node => {
 				gen(node.fn),
 				[gen(node.arg)]
 			)
+		case 'BANGEXPR':
+			return call_expression(
+				gen(node.fn),
+				[]
+			)
 		case 'DECLARE':
 			return variable_declaration(gen(node.id), null)
 		case 'DEFINE':

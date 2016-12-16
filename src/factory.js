@@ -18,6 +18,10 @@ const af = {
 		fn,
 		arg
 	}),
+	bangexpr: fn => ({
+		type: 'BANGEXPR',
+		fn
+	}),
 	fn: (args, expr) => {
 		const len = args.length
 		let l = af.lambda(args[len - 1], expr)

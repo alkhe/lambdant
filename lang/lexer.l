@@ -10,6 +10,7 @@ unit				\(\)
 newline				\n
 dot					\.
 access				\:
+bang				\!
 
 quote				\'
 normal-char			[^\'\b\f\n\r\t\v]
@@ -40,6 +41,7 @@ number				{sign}? {num}+ ('.' {num}+)?
 {equals}					return 'EQUALS'
 {unit}						return 'UNIT'
 {dot}						return 'DOT'
+{bang}						return 'BANG'
 '('							return 'LPAREN'
 ')'							return 'RPAREN'
 '['							return 'LSQUARE'

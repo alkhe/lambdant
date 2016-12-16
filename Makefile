@@ -5,3 +5,6 @@ build:
 
 run:
 	node cli-run example.lm
+
+example:
+	node cli-compile example.lm | node

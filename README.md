@@ -14,17 +14,19 @@ A Javascript dialect for modern functional programming.
 ## Language
 
 ### Values
-```lm
+```js
 2 -> 2
+'abc' -> 'abc'
+() -> null
 ```
 
 ### Expressions
-```lm
+```js
 add 2 3 -> 5
 ```
 
 ### Lambdas
-```lm
+```js
 [x: plus 2 x] 3 -> 5
 [x:[y: plus x y]] 2 3 -> 5
 [x y: plus x y] 2 3 -> 5
@@ -32,22 +34,22 @@ add 2 3 -> 5
 
 ### Combinators
 
-**T-combinator** (`#`)
+**T-combinator** (`*`)
 - reverse application
-```lm
-2 # inc -> 3
+```js
+2 * inc -> 3
 ```
 
 - infix expressions
-```lm
+```js
 plus 2 3 -> 5
-2 #plus 3 -> 5
-3 #[x: plus 2 x] -> 5
+2 *plus 3 -> 5
+3 *[x: plus 2 x] -> 5
 ```
 
 - reverse postfix expressions
-```lm
-3 #(2 #plus) -> 5
+```js
+3 *(2 *plus) -> 5
 ```
 
 ## Scripts

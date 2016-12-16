@@ -39,12 +39,21 @@ const af = {
 		type: 'THUNK',
 		expr
 	}),
-	seq: (exprs, v) => ({
+	seqadd: (seq, statement) => ({
 		type: 'SEQ',
-		exprs,
-		void: v
+		exprs: seq.exprs.concat(statement),
+		void: seq.void
 	}),
-	nullseq: seq => (seq.void = true, seq),
+	nullseq: {
+		type: 'SEQ',
+		exprs: [],
+		void: false
+	},
+	voidseq: seq => ({
+		type: 'SEQ',
+		exprs: seq.exprs,
+		void: true
+	}),
 	declare: id => ({
 		type: 'DECLARE',
 		id

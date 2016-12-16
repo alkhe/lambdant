@@ -87,16 +87,16 @@ case 1:
  return $$[$0-1] 
 break;
 case 2:
-this.$ = af.seq([], true);
+this.$ = af.nullseq;
 break;
 case 3:
-this.$ = ($$[$0-2].exprs.push($$[$0]), $$[$0-2]);
+this.$ = af.seqadd($$[$0-2], $$[$0]);
 break;
 case 4:
-this.$ = af.nullseq($$[$0-1]);
+this.$ = af.voidseq($$[$0-1]);
 break;
 case 5:
-this.$ = af.seq([$$[$0]], false);
+this.$ = af.seqadd(af.nullseq, $$[$0]);
 break;
 case 10:
 this.$ = af.declare($$[$0]);

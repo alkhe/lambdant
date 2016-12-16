@@ -10,7 +10,8 @@ const {
 	variable_declarator,
 	assignment_expression,
 	return_statement,
-	unary_expression
+	unary_expression,
+	member_expression
 } = require('./estree-factory')
 
 const gen = node => {
@@ -25,6 +26,8 @@ const gen = node => {
 		}
 		case 'VALUE':
 			return literal(node.value)
+		case 'ACCESS':
+			return member_expression(gen(node.object), gen(node.property), node.computed)
 		case 'EXPR':
 			return call_expression(
 				gen(node.fn),

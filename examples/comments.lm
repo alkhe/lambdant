@@ -1,2 +1,2 @@
 # this comment doesn't affect my code!
-debug 42
+log 42

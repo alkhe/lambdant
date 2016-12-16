@@ -1,8 +1,8 @@
 @main = [:
 	@square = [x: x *times x];
-	debug (7 *[x y: x *plus y] 5);
+	log (7 *[x y: x *plus y] 5);
 
 	@$25 = square (2 *plus 3);
-	debug $25
+	log $25
 ];
 main()

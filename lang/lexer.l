@@ -1,13 +1,15 @@
 alpha				[A-Za-z\$]
 sign				[\-\+]
 num					[0-9]
-arrow				\:
+arrow-or-access		\:
 infix				\*
 seq					\;
 local				\@
 equals				\=
 unit				\(\)
 newline				\n
+dot					\.
+access				\:
 
 quote				\'
 normal-char			[^\'\b\f\n\r\t\v]
@@ -31,12 +33,13 @@ number				{sign}? {num}+ ('.' {num}+)?
 \s+							/* skip whitespace */
 {number}					return 'NUM'
 {id}						return 'ID'
-{arrow}						return 'ARROW'
+{arrow-or-access}			return 'ARROW-OR-ACCESS'
 {infix}						return 'INFIX'
 {seq}						return 'SEQ'
 {local}						return 'LOCAL'
 {equals}					return 'EQUALS'
 {unit}						return 'UNIT'
+{dot}						return 'DOT'
 '('							return 'LPAREN'
 ')'							return 'RPAREN'
 '['							return 'LSQUARE'

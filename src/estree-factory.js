@@ -26,6 +26,8 @@ const return_statement = argument => ({ type: 'ReturnStatement', argument })
 
 const unary_expression = (operator, prefix, argument) => ({ type: 'UnaryExpression', operator, prefix, argument })
 
+const member_expression = (object, property, computed) => ({ type: 'MemberExpression', object, property, computed })
+
 module.exports = {
 	literal,
 	identifier,
@@ -38,5 +40,6 @@ module.exports = {
 	variable_declarator,
 	assignment_expression,
 	return_statement,
-	unary_expression
+	unary_expression,
+	member_expression
 }

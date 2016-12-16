@@ -47,14 +47,15 @@ value
 	: NUM -> af.number($1)
 	| UNIT -> af.value(null)
 	| STRING -> af.value(eval($1))
+	| value ARROW-OR-ACCESS lookup -> af.access($1, $3, false)
 	| lookup
 	| LPAREN expr RPAREN -> $2
 	| lambda
 	;
 
 lambda
-	: LSQUARE id-list ARROW sequence RSQUARE -> af.fn($2, $4)
-	| LSQUARE ARROW sequence RSQUARE -> af.thunk($3)
+	: LSQUARE id-list ARROW-OR-ACCESS  sequence RSQUARE -> af.fn($2, $4)
+	| LSQUARE ARROW-OR-ACCESS  sequence RSQUARE -> af.thunk($3)
 	;
 
 id-list

@@ -1,1 +1,1 @@
-debug ('Hello, ' *plus 'world!')
+log ('Hello, ' *plus 'world!')

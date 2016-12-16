@@ -54,6 +54,12 @@ const af = {
 		type: 'ASSIGN',
 		id,
 		expr
+	}),
+	access: (object, property, computed) => ({
+		type: 'ACCESS',
+		object,
+		property,
+		computed
 	})
 }
 

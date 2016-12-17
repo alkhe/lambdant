@@ -25,12 +25,19 @@ $ lm c file.lm
 $ lm e file.lm
 ```
 
+**eval-arg:** transform Lambdant source string into Javascript and run it in a new node process
+```sh
+$ lm a '& Math.log10 1000'
+  3
+```
+
 ### Note
 These commands will automatically prepend an import statement for the standard library to each Lambdant source file. This is useful for testing and development, but not recommended for production code. To opt out, suffix the mode argument with a dash:
 ```sh
 $ lm d- file.lm # dump file.lm without implicit prelude
 $ lm c- file.lm # compile file.lm without implicit prelude
-$ lm e- file.lm # eval file.lm without implicit prelude
+$ lm e- file.lm # evaluate file.lm without implicit prelude
+$ lm a- 'code' # evaluate code without implicit prelude
 ```
 
 ## Files
@@ -53,6 +60,16 @@ $ lm e- file.lm # eval file.lm without implicit prelude
 ```
 
 ## Language
+
+### Operator Associativity/Precedence
+```
+()
+.
+!
+application * !!
+:
+&
+```
 
 ### Values
 ```js

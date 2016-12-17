@@ -14,6 +14,7 @@ const peek = x => (console.dir(x, { depth: null, colors: true }), x)
 const DUMP_RULE = 'd'
 const COMPILE_RULE = 'c'
 const EVAL_RULE = 'e'
+const EVAL_ARG_RULE = 'a'
 
 const NO_PRELUDE = '-'
 
@@ -48,6 +49,13 @@ if (files.length < 1) {
 		}
 		case EVAL_RULE: {
 			const source = files.map(read).map(generate_code).join(';')
+			const child = spawn('node', [], { stdio: ['pipe', 'inherit', 'inherit'] })
+			child.stdin.write(source)
+			child.stdin.end()
+			break
+		}
+		case EVAL_ARG_RULE: {
+			const source = files.map(generate_code).join(',')
 			const child = spawn('node', [], { stdio: ['pipe', 'inherit', 'inherit'] })
 			child.stdin.write(source)
 			child.stdin.end()

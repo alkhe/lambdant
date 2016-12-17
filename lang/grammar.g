@@ -31,7 +31,7 @@ statement
 	: declaration
 	| definition
 	| assignment
-	| composition
+	| five
 	;
 
 declaration
@@ -39,23 +39,59 @@ declaration
 	;
 
 definition
-	: LOCAL lookup EQUALS composition -> af.define($2, $4)
+	: LOCAL lookup EQUALS five -> af.define($2, $4)
 	;
 
 assignment
-	: memory EQUALS composition -> af.assign($1, $3)
+	: memory EQUALS five -> af.assign($1, $3)
 	;
 
-composition
-	: composition ARROW-OR-COMPOSE expr -> af.compose($1, $3)
-	| expr
+// post-composition
+// P-combinator
+five
+	: AMP five -> af.debug($2)
+	| six
+	;
+
+// composition
+// B-combinator
+six
+	: six ARROW-OR-COMPOSE seven -> af.compose($1, $3)
+	| seven
 	;
 	
-expr
-	: expr value -> af.expr($1, $2)
-	| expr INFIX value -> af.expr($3, $1)
-	| expr BANGBANG value -> af.apply($1, $3)
-	| value
+// expr
+// calls, T-combinator, A'-combinator
+seven
+	: seven eight -> af.expr($1, $2)
+	| seven INFIX eight -> af.expr($3, $1)
+	| seven BANGBANG eight -> af.apply($1, $3)
+	| eight
+	;
+
+// invocation
+// E-combinator
+eight
+	: eight BANG -> af.bangexpr($1)
+	| nine
+	;
+
+// value
+// literals, identifiers, E-combinator
+nine
+	: NUM -> af.number($1)
+	| UNIT -> af.value(null)
+	| STRING -> af.value(eval($1))
+	| lambda
+	| LANGLE array-contents RANGLE -> $2
+	| memory
+	| ten
+	;
+
+// atom
+// parentheses
+ten
+	: LPAREN five RPAREN -> $2
 	;
 
 lookup
@@ -64,29 +100,13 @@ lookup
 
 memory
 	: lookup
-	| value DOT lookup -> af.access($1, $3, false)
-	| value DOT atom -> af.access($1, $3, true)
-	;
-
-value
-	: NUM -> af.number($1)
-	| UNIT -> af.value(null)
-	| STRING -> af.value(eval($1))
-	| memory
-	| lambda
-	| value BANG -> af.bangexpr($1)
-	| AMP value -> af.debug($2)
-	| LANGLE array-contents RANGLE -> $2
-	| atom
-	;
-
-atom
-	: LPAREN composition RPAREN -> $2
+	| nine DOT lookup -> af.access($1, $3, false)
+	| nine DOT ten -> af.access($1, $3, true)
 	;
 
 array-contents
-	: array-contents COMMA expr -> af.arrayadd($1, $3)
-	| expr -> af.arrayadd(af.array, $1)
+	: array-contents COMMA five -> af.arrayadd($1, $3)
+	| five -> af.arrayadd(af.array, $1)
 	| -> af.array
 	;
 

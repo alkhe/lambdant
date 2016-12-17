@@ -3,6 +3,7 @@ const {
 	identifier,
 	array_expression,
 	call_expression,
+	new_expression,
 	arrow_function_expression,
 	block_statement,
 	expression_statement,
@@ -50,11 +51,10 @@ const gen = node => {
 			return array_expression(node.exprs.map(gen))
 		case 'ACCESS':
 			return member_expression(gen(node.object), gen(node.property), node.computed)
-		case 'EXPR':
-			return call_expression(
-				gen(node.fn),
-				[gen(node.arg)]
-			)
+		case 'EXPR': {
+			const fn_ast = gen(node.fn)
+			return (fn_ast.type === 'ID' && fn_ast.name === 'new' ? new_expression : call_expression)(fn_ast, [gen(node.arg)])
+		}
 		case 'BANGEXPR':
 			return call_expression(
 				gen(node.fn),

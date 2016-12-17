@@ -6,6 +6,8 @@ const array_expression = elements => ({ type: 'ArrayExpression', elements })
 
 const call_expression = (callee, arguments) => ({ type: 'CallExpression', callee, arguments })
 
+const new_expression = (callee, arguments) => ({ type: 'NewExpresion', callee, arguments })
+
 const arrow_function_expression = (params, body, expression) => ({ type: 'ArrowFunctionExpression', params, body, expression })
 
 const block_statement = body => ({ type: 'BlockStatement', body })
@@ -37,6 +39,7 @@ module.exports = {
 	identifier,
 	array_expression,
 	call_expression,
+	new_expression,
 	arrow_function_expression,
 	block_statement,
 	expression_statement,

@@ -2,7 +2,12 @@
   "name": "lambdant",
   "version": "0.0.1",
   "description": "A Javascript dialect for modern functional programming.",
-  "main": "cli-compile.js",
+  "main": "./src/index.js",
+  "preferGlobal": true,
+  "bin": {
+    "lmc": "node ./tools/compile.js",
+    "lmd": "node ./tools/dump.js"
+  },
   "directories": {
     "example": "examples"
   },

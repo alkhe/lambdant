@@ -17,10 +17,10 @@ const {
 	spread_element
 } = require('./estree-factory')
 
-const CONSOLE_ID = identifier('console')
+const STD_ID = identifier('std')
 const LOG_ID = identifier('log')
-const CONSOLE_LOG = member_expression(CONSOLE_ID, LOG_ID, false)
-const debug_expression = expression => call_expression(LOG_ID, [expression])
+const STD_LOG = member_expression(STD_ID, LOG_ID, false)
+const debug_expression = expression => call_expression(STD_LOG, [expression])
 
 const compose_functions = fns => {
 	const chain = fns.reduceRight(

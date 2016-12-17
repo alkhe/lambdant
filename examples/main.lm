@@ -1,8 +1,8 @@
 @main = [:
-	@square = [x: x *times x];
-	&(7 *[x y: x *plus y] 5);
+	@square = [x: x *std.mul x];
+	&(7 *[x y: x *std.add y] 5);
 
-	@$25 = square (2 *plus 3);
+	@$25 = square (2 *std.add 3);
 	&$25
 ];
 main!

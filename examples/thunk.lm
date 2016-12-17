@@ -1,1 +1,1 @@
-[: log 'in a thunk!']!
+[: std.log 'in a thunk!']!

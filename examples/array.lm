@@ -1,1 +1,2 @@
-log <1, 1 *plus 1, (inc : inc) 1>
+@inc = std.add 1;
+&<1, 1 *std.add 1, (inc : inc) 1>

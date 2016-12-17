@@ -69,6 +69,11 @@ console.log() // null
 console.log! // (newline)
 ```
 
+### Comments
+```js
+# this is a comment
+```
+
 ### Lambdas
 ```js
 [x: std.add 2 x] 3 -> 5
@@ -76,6 +81,7 @@ console.log! // (newline)
 [x y: std.add x y] 2 3 -> 5
 [: log 'in a thunk!']! // in a thunk!
 [:] -> (noop)
+[x y, std.add x y] !! <1, 2> -> 3
 ```
 
 ### Blocks
@@ -115,8 +121,8 @@ w -> 5
 
 ### Members
 ```js
-@- = require 'lodash';
--.now! -> 1481926731041
+Date.now! -> 1481926731041
+<1, 9, 8, 4>.(2) -> 8
 ```
 
 ## Javascript FFI
@@ -136,6 +142,20 @@ It is best to use a function with better defined arity, like this one:
 ```js
 @create = [x args: new x !! args];
 (create Array <5>).fill 0 -> [0, 0, 0, 0, 0]
+```
+
+### Multivariate Functions
+The standard library provides currying and uncurrying facilities up to 5-arity.
+```js
+std.uncurry2 [x y: std.add x y] !! <1, 2> -> 3
+std.curry3 Date.UTC 1982 9 1 -> 402278400000
+((Array 5).fill 0).map (std.uncurry2 [- i: i]) -> [0, 1, 2, 3, 4]
+```
+
+You can also use multivariate lambda literals and spreads for multivariate calls.
+```js
+[x y z, std.sum <x, y, z>] !! <1, 2, 3> -> 6
+((Array 5).fill 0).map [- i, i] -> [0, 1, 2, 3, 4]
 ```
 
 ### Native Combinators

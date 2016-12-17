@@ -33,10 +33,10 @@
   },
   "homepage": "https://github.com/edge/lambdant#readme",
   "dependencies": {
+    "colors": "^1.1.2",
     "escodegen": "^1.8.1"
   },
   "devDependencies": {
-    "colors": "^1.1.2",
     "jison": "^0.4.17",
     "lodash": "^4.17.2",
     "stdlm": "^0.2.0"

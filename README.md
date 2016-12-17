@@ -1,6 +1,38 @@
 # lambdant
 A Javascript dialect for modern functional programming.
 
+## Get
+
+Globally install the cli tools and the [standard library](https://github.com/edge/stdlm):
+```sh
+# npm i -g lambdant stdlm
+```
+
+## Usage
+
+**dump:** dump Lambdant source, Lambdant ast, ESTree ast, and Javascript source for a Lambdant file
+```sh
+$ lm d file.lm
+```
+
+**compile:** transform Lambdant source file into Javascript and write it to stdout
+```sh
+$ lm c file.lm
+```
+
+**eval:** transform Lambdant source file into Javascript and run it in a new node process
+```sh
+$ lm e file.lm
+```
+
+### Note
+These commands will automatically prepend an import statement for the standard library to each Lambdant source file. This is useful for testing and development, but suboptimal for production code. To opt out, suffix the mode argument with a dash:
+```sh
+$ lm d- file.lm # dump file.lm without implicit prelude
+$ lm c- file.lm # compile file.lm without implicit prelude
+$ lm e- file.lm # eval file.lm without implicit prelude
+```
+
 ## Files
 
 - lang/grammar.g contains the Jison grammar
@@ -32,16 +64,16 @@ A Javascript dialect for modern functional programming.
 
 ### Expressions
 ```js
-add 2 3 -> 5
+std.add 2 3 -> 5
 console.log() // null
 console.log! // (newline)
 ```
 
 ### Lambdas
 ```js
-[x: plus 2 x] 3 -> 5
-[x:[y: plus x y]] 2 3 -> 5
-[x y: plus x y] 2 3 -> 5
+[x: std.add 2 x] 3 -> 5
+[x:[y: std.add x y]] 2 3 -> 5
+[x y: std.add x y] 2 3 -> 5
 [: log 'in a thunk!']! // in a thunk!
 [:] -> (noop)
 ```
@@ -92,31 +124,31 @@ w -> 5
 **T-combinator** (`*`)
 - reverse application
 ```js
-2 * inc -> 3
+2 * std.add 1 -> 3
 ```
 
 - infix expressions
 ```js
-plus 2 3 -> 5
-2 *plus 3 -> 5
-3 *[x: plus 2 x] -> 5
+std.add 2 3 -> 5
+2 *std.add 3 -> 5
+3 *[x: std.add 2 x] -> 5
 ```
 
 - reverse postfix expressions
 ```js
-3 *(2 *plus) -> 5
+3 *(2 *std.add) -> 5
 ```
 
 **B-combinator** (`:`)
 Composes functions.
 ```js
-(plus 2 : inc) 3 -> 6
+(std.add 2 : std.add 1) 3 -> 6
 ```
 
 **P-combinator** (`&`)
 Prints and returns the argument.
 ```js
-&(plus 40 2) // 42
+&(std.add 40 2) // 42
 ```
 
 **E-combinator** (`!`)
@@ -136,10 +168,6 @@ Date.UTC !! <1982, 9, 1> -> 402278400000
 `make build` generates ./src/parser.js from ./lang/grammar.g and ./lang/lexer.l.
 
 `make suite` evaluates each of the scripts in ./examples.
-
-`node tools/dump file.lm` ouptuts the source, Lambdant ast, and estree ast of a Lambdant script.
-
-`node tools/compile file.lm` compiles a Lambdant script, printing the Javascript on stdout, can be written to a Javascript file or piped to node
 
 ## TODO
 - add object and array literals

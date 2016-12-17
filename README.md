@@ -165,9 +165,9 @@ now() // Error!
 
 It is best to use a function with better defined arity, like this one:
 
+[`$.create`](https://github.com/edge/stdlm#create)
 ```js
-@create = [x args: new x !! args];
-(create Array <5>).fill 0 -> [0, 0, 0, 0, 0]
+($.create Array <5>).fill 0 -> [0, 0, 0, 0, 0]
 ```
 
 ### Multivariate Functions
@@ -218,7 +218,7 @@ Composes functions.
 ```
 
 #### P-combinator (`&`)
-Prints and returns the argument. This combinator has the lowest precedence -- to avoid confusion, place a space between the combinator and the expression if the expression contains spaces and is not delimited.
+Prints and returns the argument. This combinator has the lowest precedence -- to avoid confusion, place a space between the combinator and the expression if the expression contains spaces and is not delimited. Calls [`$.log`](https://github.com/edge/stdlm#log) under the hood; reassigning `$` will break this functionality.
 [`$.add`](https://github.com/edge/stdlm#add)
 ```js
 &42 -> 42 // 42

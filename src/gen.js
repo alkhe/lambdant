@@ -17,7 +17,7 @@ const {
 	spread_element
 } = require('./estree-factory')
 
-const STD_ID = identifier('std')
+const STD_ID = identifier('$')
 const LOG_ID = identifier('log')
 const STD_LOG = member_expression(STD_ID, LOG_ID, false)
 const debug_expression = expression => call_expression(STD_LOG, [expression])

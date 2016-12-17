@@ -55,8 +55,14 @@ $ lm a- 'code' # evaluate code without implicit prelude
 
 ## Hello World
 
+`hello.lm`
 ```js
-&'Hello, world!' // Hello, world!
+&'Hello, world!'
+```
+
+```sh
+$ lm e hello.lm
+  'Hello, world!'
 ```
 
 ## Language
@@ -66,7 +72,8 @@ $ lm a- 'code' # evaluate code without implicit prelude
 ()
 .
 !
-application * !!
+application
+* !!
 :
 &
 ```
@@ -81,7 +88,7 @@ application * !!
 
 ### Expressions
 ```js
-std.add 2 3 -> 5
+$.add 2 3 -> 5
 console.log() // null
 console.log! // (newline)
 ```
@@ -93,12 +100,12 @@ console.log! // (newline)
 
 ### Lambdas
 ```js
-[x: std.add 2 x] 3 -> 5
-[x:[y: std.add x y]] 2 3 -> 5
-[x y: std.add x y] 2 3 -> 5
+[x: $.add 2 x] 3 -> 5
+[x:[y: $.add x y]] 2 3 -> 5
+[x y: $.add x y] 2 3 -> 5
 [: log 'in a thunk!']! // in a thunk!
 [:] -> (noop)
-[x y, std.add x y] !! <1, 2> -> 3
+[x y, $.add x y] !! <1, 2> -> 3
 ```
 
 ### Blocks
@@ -164,14 +171,14 @@ It is best to use a function with better defined arity, like this one:
 ### Multivariate Functions
 The standard library provides currying and uncurrying facilities up to 5-arity.
 ```js
-std.uncurry2 [x y: std.add x y] !! <1, 2> -> 3
-std.curry3 Date.UTC 1982 9 1 -> 402278400000
-((Array 5).fill 0).map (std.uncurry2 [- i: i]) -> [0, 1, 2, 3, 4]
+$.uncurry2 [x y: $.add x y] !! <1, 2> -> 3
+$.curry3 Date.UTC 1982 9 1 -> 402278400000
+((Array 5).fill 0).map ($.uncurry2 [- i: i]) -> [0, 1, 2, 3, 4]
 ```
 
 You can also use multivariate lambda literals and spreads for multivariate calls.
 ```js
-[x y z, std.sum <x, y, z>] !! <1, 2, 3> -> 6
+[x y z, $.sum <x, y, z>] !! <1, 2, 3> -> 6
 ((Array 5).fill 0).map [- i, i] -> [0, 1, 2, 3, 4]
 ```
 
@@ -180,31 +187,33 @@ You can also use multivariate lambda literals and spreads for multivariate calls
 #### T-combinator (`*`)
 - reverse application
 ```js
-2 * std.add 1 -> 3
+(2 * $.add) 1 -> 3
 ```
 
 - infix expressions
 ```js
-std.add 2 3 -> 5
-2 *std.add 3 -> 5
-3 *[x: std.add 2 x] -> 5
+$.add 2 3 -> 5
+2 *$.add 3 -> 5
+3 *[x: $.add 2 x] -> 5
 ```
 
 - reverse postfix expressions
 ```js
-3 *(2 *std.add) -> 5
+3 *(2 *$.add) -> 5
 ```
 
 #### B-combinator (`:`)
 Composes functions.
 ```js
-(std.add 2 : std.add 1) 3 -> 6
+($.add 2 : $.add 1) 3 -> 6
 ```
 
 #### P-combinator (`&`)
-Prints and returns the argument.
+Prints and returns the argument. This combinator has the lowest precedence -- to avoid confusion, place a space between the combinator and the expression if the expression contains spaces and is not delimited.
 ```js
-&(std.add 40 2) // 42
+&42 -> 42 // 42
+& $.add 40 2 -> 42 // 42
+&($.add 40 2) -> 42 // 42
 ```
 
 #### E-combinator (`!`)

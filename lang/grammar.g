@@ -31,7 +31,7 @@ statement
 	: declaration
 	| definition
 	| assignment
-	| five
+	| full
 	;
 
 declaration
@@ -39,34 +39,50 @@ declaration
 	;
 
 definition
-	: LOCAL lookup EQUALS five -> af.define($2, $4)
+	: LOCAL lookup EQUALS full -> af.define($2, $4)
 	;
 
 assignment
-	: memory EQUALS five -> af.assign($1, $3)
+	: memory EQUALS full -> af.assign($1, $3)
+	;
+
+// base expression, zero precedence
+full
+	: four
 	;
 
 // post-composition
 // P-combinator
-five
-	: AMP five -> af.debug($2)
-	| six
+four
+	: AMP four -> af.debug($2)
+	| five
 	;
 
 // composition
 // B-combinator
-six
-	: six ARROW-OR-COMPOSE seven -> af.compose($1, $3)
-	| seven
+five
+	: five ARROW-OR-COMPOSE six -> af.compose($1, $3)
+	| six
 	;
 	
+// combination
+// T-combinator, A'-combinator
+six
+	: six t-comb -> af.expr($2, $1)
+	| six t-comb seven -> af.expr(af.expr($2, $1), $3)
+	| six BANGBANG seven -> af.apply($1, $3)
+	| seven
+	;
+
 // expr
-// calls, T-combinator, A'-combinator
+// calls
 seven
 	: seven eight -> af.expr($1, $2)
-	| seven INFIX eight -> af.expr($3, $1)
-	| seven BANGBANG eight -> af.apply($1, $3)
 	| eight
+	;
+
+t-comb
+	: INFIX eight -> $2
 	;
 
 // invocation
@@ -88,25 +104,25 @@ nine
 	| ten
 	;
 
-// atom
-// parentheses
-ten
-	: LPAREN five RPAREN -> $2
-	;
-
-lookup
-	: ID -> af.id($1)
-	;
-
 memory
 	: lookup
 	| nine DOT lookup -> af.access($1, $3, false)
 	| nine DOT ten -> af.access($1, $3, true)
 	;
 
+// atom
+// parentheses
+ten
+	: LPAREN full RPAREN -> $2
+	;
+
+lookup
+	: ID -> af.id($1)
+	;
+
 array-contents
-	: array-contents COMMA five -> af.arrayadd($1, $3)
-	| five -> af.arrayadd(af.array, $1)
+	: array-contents COMMA full -> af.arrayadd($1, $3)
+	| full -> af.arrayadd(af.array, $1)
 	| -> af.array
 	;
 

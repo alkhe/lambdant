@@ -1,2 +1,2 @@
-@- = require 'lodash';
-&(-.floor -2.4)
+@_ = require 'lodash';
+& _.floor -2.4

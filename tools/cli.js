@@ -18,7 +18,7 @@ const EVAL_ARG_RULE = 'a'
 
 const NO_PRELUDE = '-'
 
-const prelude = `@std = require 'stdlm';`
+const prelude = `@$ = require 'stdlm';`
 
 const pre_parse = s => mode.length > 1 && mode[1] === NO_PRELUDE
 	? s

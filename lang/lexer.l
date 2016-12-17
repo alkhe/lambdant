@@ -1,4 +1,4 @@
-alpha				[A-Za-z\$]
+word-char			[A-Za-z\_\$]
 sign				[\-\+]
 num					[0-9]
 arrow-or-compose	\:
@@ -18,9 +18,7 @@ scomment			\#
 scomment-char		[^\n]
 scomment-text		{scomment-char}*\n
 
-id-base-char		{alpha} | {sign}
-id-general-char		{id-base-char} | {num}
-id					{id-base-char} {id-general-char}* {id-base-char}* {id-general-char}*
+id					{word-char} ({word-char} | {num})*
 number				{sign}? {num}+ ('.' {num}+)?
 
 %x scomment string

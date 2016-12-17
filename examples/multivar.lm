@@ -1,3 +1,3 @@
-@date-args = <1982, 9, 1>;
-&(Date.UTC !! date-args);
-&(std.curry3 Date.UTC 1982 9 1)
+@date_args = <1982, 9, 1>;
+& Date.UTC !! date_args;
+& $.curry3 Date.UTC 1982 9 1

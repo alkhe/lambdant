@@ -1,5 +1,2 @@
-@- = 5;
-&5;
-
-@the-answer = 42;
-&the-answer
+@the_answer = 42;
+&the_answer

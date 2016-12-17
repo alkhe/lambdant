@@ -1,9 +1,7 @@
-const escape = id => id.replace(/\-/g, '_')
-
 const af = {
 	id: name => ({
 		type: 'ID',
-		name: escape(name)
+		name
 	}),
 	number: n => ({
 		type: 'NUMBER',

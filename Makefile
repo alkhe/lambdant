@@ -5,3 +5,6 @@ build:
 
 example:
 	node ./tools/compile examples/main.lm | node
+
+suite:
+	for i in ./examples/*; do node ./tools/compile $$i | node; done

@@ -110,7 +110,7 @@ const gen = node => {
 			return block_statement([])
 		}
 	}
-	throw new Error(`unrecognized node type: ${ node.type }`)
+	throw new Error(`unrecognized node type: ${ node.type } on node ${ node }`)
 }
 
 module.exports = node => {

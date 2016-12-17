@@ -12,6 +12,7 @@ dot					\.
 access				\:
 bang				\!
 amp					\&
+call				\^
 
 quote				\'
 normal-char			[^\'\b\f\n\r\t\v]
@@ -44,6 +45,7 @@ number				{sign}? {num}+ ('.' {num}+)?
 {dot}						return 'DOT'
 {bang}						return 'BANG'
 {amp}						return 'AMP'
+{call}						return 'CALL'
 '('							return 'LPAREN'
 ')'							return 'RPAREN'
 '['							return 'LSQUARE'

@@ -1,6 +1,13 @@
 %parse-param af
 %start program
 
+%left '.' DOT
+%left '*' INFIX
+%left ':' ARROW-OR-ACCESS
+%left '^' CALL
+%left '&' AMP
+%right '!' BANG
+
 %%
 
 program
@@ -25,7 +32,7 @@ statement
 	: declaration
 	| definition
 	| assignment
-	| expr
+	| composition
 	;
 
 declaration
@@ -33,22 +40,20 @@ declaration
 	;
 
 definition
-	: LOCAL lookup EQUALS expr -> af.define($2, $4)
+	: LOCAL lookup EQUALS composition -> af.define($2, $4)
 	;
 
 assignment
-	: lookup EQUALS expr -> af.assign($1, $3)
+	: lookup EQUALS composition -> af.assign($1, $3)
 	;
 
-call
-	: expr value -> af.expr($1, $2)
-	| expr BANG -> af.bangexpr($1)
-	| AMP value -> af.debug($2)
-	| expr DOT value -> af.compose($1, $3)
+composition
+	: composition DOT expr -> af.compose($1, $3)
+	| expr
 	;
-
+	
 expr
-	: call
+	: expr value -> af.expr($1, $2)
 	| expr INFIX value -> af.expr($3, $1)
 	| value
 	;
@@ -62,9 +67,11 @@ value
 	| UNIT -> af.value(null)
 	| STRING -> af.value(eval($1))
 	| lookup
-	| value ARROW-OR-ACCESS lookup -> af.access($1, $3, false)
-	| LPAREN expr RPAREN -> $2
 	| lambda
+	| LPAREN composition RPAREN -> $2
+	| value BANG -> af.bangexpr($1)
+	| AMP value -> af.debug($2)
+	| value ARROW-OR-ACCESS lookup -> af.access($1, $3, false)
 	;
 
 lambda

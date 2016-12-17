@@ -127,6 +127,10 @@ process.exit!
 
 ## Scripts
 
+`make build` generates ./src/parser.js from ./lang/grammar.g and ./lang/lexer.l.
+
+`make suite` evaluates each of the scripts in ./examples.
+
 `node tools/dump file.lm` ouptuts the source, Lambdant ast, and estree ast of a Lambdant script.
 
 `node tools/compile file.lm` compiles a Lambdant script, printing the Javascript on stdout, can be written to a Javascript file or piped to node

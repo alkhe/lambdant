@@ -7,10 +7,6 @@ seq					\;
 local				\@
 equals				\=
 unit				\(\)
-newline				\n
-dot					\.
-bang				\!
-amp					\&
 
 quote				\'
 normal-char			[^\'\b\f\n\r\t\v]
@@ -38,16 +34,18 @@ number				{sign}? {num}+ ('.' {num}+)?
 {infix}						return 'INFIX'
 {seq}						return 'SEQ'
 {local}						return 'LOCAL'
-{equals}					return 'EQUALS'
 {unit}						return 'UNIT'
-{dot}						return 'DOT'
-{bang}						return 'BANG'
-{amp}						return 'AMP'
-{call}						return 'CALL'
+'='							return 'EQUALS'
+'.'							return 'DOT'
+'!'							return 'BANG'
+'&'							return 'AMP'
 '('							return 'LPAREN'
 ')'							return 'RPAREN'
 '['							return 'LSQUARE'
 ']'							return 'RSQUARE'
+'<'							return 'LANGLE'
+'>'							return 'RANGLE'
+','							return 'COMMA'
 
 {scomment}					this.begin('scomment')
 <scomment>{scomment-text}	this.popState()

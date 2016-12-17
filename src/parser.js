@@ -645,9 +645,9 @@ case 5:return 9
 break;
 case 6:return 14
 break;
-case 7:return 16
+case 7:return 23
 break;
-case 8:return 23
+case 8:return 16
 break;
 case 9:return 30
 break;
@@ -655,36 +655,40 @@ case 10:return 28
 break;
 case 11:return 29
 break;
-case 12:return 'CALL'
+case 12:return 26
 break;
-case 13:return 26
+case 13:return 27
 break;
-case 14:return 27
+case 14:return 31
 break;
-case 15:return 31
+case 15:return 33
 break;
-case 16:return 33
+case 16:return 'LANGLE'
 break;
-case 17:this.begin('scomment')
+case 17:return 'RANGLE'
 break;
-case 18:this.popState()
+case 18:return 'COMMA'
 break;
-case 19:this.begin('string')
+case 19:this.begin('scomment')
 break;
-case 20:
+case 20:this.popState()
+break;
+case 21:this.begin('string')
+break;
+case 22:
 								this.popState()
 								yy_.yytext = `'` + yy_.yytext
 								return 24
 							
 break;
-case 21:return 5
+case 23:return 5
 break;
-case 22:return 'INVALID'
+case 24:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:(([\-\+])?([0-9])+(\.([0-9])+)?))/,/^(?:((([A-Za-z\$])|([\-\+]))((([A-Za-z\$])|([\-\+]))|([0-9]))*(([A-Za-z\$])|([\-\+]))*((([A-Za-z\$])|([\-\+]))|([0-9]))*))/,/^(?:(:))/,/^(?:(\*))/,/^(?:(;))/,/^(?:(@))/,/^(?:(=))/,/^(?:(\(\)))/,/^(?:(\.))/,/^(?:(!))/,/^(?:(&))/,/^(?:{call})/,/^(?:\()/,/^(?:\))/,/^(?:\[)/,/^(?:\])/,/^(?:(#))/,/^(?:(([^\n])*\n))/,/^(?:('))/,/^(?:((([^\'\b\f\n\r\t\v])|(\\[\'\\bfnrtv]))*(')))/,/^(?:$)/,/^(?:.)/],
-conditions: {"scomment":{"rules":[18],"inclusive":false},"string":{"rules":[20],"inclusive":false},"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19,21,22],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:(([\-\+])?([0-9])+(\.([0-9])+)?))/,/^(?:((([A-Za-z\$])|([\-\+]))((([A-Za-z\$])|([\-\+]))|([0-9]))*(([A-Za-z\$])|([\-\+]))*((([A-Za-z\$])|([\-\+]))|([0-9]))*))/,/^(?:(:))/,/^(?:(\*))/,/^(?:(;))/,/^(?:(@))/,/^(?:(\(\)))/,/^(?:=)/,/^(?:\.)/,/^(?:!)/,/^(?:&)/,/^(?:\()/,/^(?:\))/,/^(?:\[)/,/^(?:\])/,/^(?:<)/,/^(?:>)/,/^(?:,)/,/^(?:(#))/,/^(?:(([^\n])*\n))/,/^(?:('))/,/^(?:((([^\'\b\f\n\r\t\v])|(\\[\'\\bfnrtv]))*(')))/,/^(?:$)/,/^(?:.)/],
+conditions: {"scomment":{"rules":[20],"inclusive":false},"string":{"rules":[22],"inclusive":false},"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,21,23,24],"inclusive":true}}
 });
 return lexer;
 })();

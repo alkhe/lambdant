@@ -90,7 +90,11 @@ const gen = node => {
 				const es_asts = []
 
 				for (let i = 0; i < exprs.length - 1; i++) {
-					es_asts.push(gen(exprs[i]))
+					const ast = gen(exprs[i])
+					es_asts.push(ast.type === 'CallExpression'
+						? expression_statement(ast)
+						: ast
+					)
 				}
 
 				const last_ast = gen(exprs[exprs.length - 1])

@@ -1,15 +1,24 @@
 # lambdant
 A Javascript dialect for modern functional programming.
 
-# Notes
-
 ## Files
 
-- grammar.g contains the Jison grammar
-- lexer.l contains the Jison lex file
-- parser.js is the parser script, compiled by `jison grammar.g lexer.l -o parser.js`
-- eval.js evaluates a parsed ast
+- lang/grammar.g contains the Jison grammar
+- lang/lexer.l contains the Jison lex file
+- parser.js is the parser script, compiled by `jison ./lang/grammar.g ./lang/lexer.l -o .src/parser.js`
 - gen.js generates an ESTree compliant Javascript ast given a Lambdant ast
+
+## Goals
+- mutation allowed, but discouraged
+- easy and intuitive javascript ffi by producing javascript code and using curry/uncurry
+- promote functional programming techniques
+- general-purpose functional scripting
+
+## Hello World
+
+```js
+&'Hello, world!' // Hello, world!
+```
 
 ## Language
 
@@ -23,6 +32,8 @@ A Javascript dialect for modern functional programming.
 ### Expressions
 ```js
 add 2 3 -> 5
+console.log() // null
+console.log! // (newline)
 ```
 
 ### Lambdas
@@ -30,18 +41,49 @@ add 2 3 -> 5
 [x: plus 2 x] 3 -> 5
 [x:[y: plus x y]] 2 3 -> 5
 [x y: plus x y] 2 3 -> 5
+[: log 'in a thunk!']! // in a thunk!
+[:] -> (noop)
+```
+
+### Blocks
+Every statement in a block, except for the last, must be semicolon-terminated.
+
+If the last expression is terminated, the function will return undefined, otherwise, it will return the expression.
+```js
+@write = process.stdout.write : String;
+write 'This will not return: ';
+write [: 42;]!;
+console.log!;
+write 'This will return: ';
+write [: 42]!;
+console.log!
+
+// This will not return: undefined
+// This will return: 42
+```
+
+### Declaration
+```js
+@declared
+```
+
+### Definition
+```js
+@name = 'John'
+name -> 'John'
 ```
 
 ### Assignment
 ```js
-@name = 'John';
-name -> 'John'
+@w;
+w = 5;
+w -> 5
 ```
 
 ### Members
 ```js
 @- = require 'lodash';
--:now() -> 1481926731041
+-.now! -> 1481926731041
 ```
 
 ### Native Combinators
@@ -64,10 +106,10 @@ plus 2 3 -> 5
 3 *(2 *plus) -> 5
 ```
 
-**B-combinator** (`.`)
+**B-combinator** (`:`)
 Composes functions.
 ```js
-(add 2) . inc 3 -> 6
+(plus 2 : inc) 3 -> 6
 ```
 
 **P-combinator** (`&`)
@@ -75,6 +117,13 @@ Prints and returns the argument.
 ```js
 &(plus 40 2) // 42
 ```
+
+**E-combinator** (`!`)
+Evaluates a thunk. (Calls a function with zero arguments.)
+```js
+process.exit!
+```
+
 
 ## Scripts
 
@@ -85,4 +134,3 @@ Prints and returns the argument.
 ## TODO
 - add object and array literals
 - add multivariate function calls
-- add more combinators

@@ -1,12 +1,11 @@
 %parse-param af
 %start program
 
-%left '.' DOT
-%left '*' INFIX
-%left ':' ARROW-OR-ACCESS
-%left '^' CALL
-%left '&' AMP
-%right '!' BANG
+%left DOT
+%left INFIX
+%left ARROW-OR-ACCESS
+%nonassoc AMP
+%nonassoc BANG
 
 %%
 
@@ -48,7 +47,7 @@ assignment
 	;
 
 composition
-	: composition DOT expr -> af.compose($1, $3)
+	: composition ARROW-OR-COMPOSE expr -> af.compose($1, $3)
 	| expr
 	;
 	
@@ -71,12 +70,12 @@ value
 	| LPAREN composition RPAREN -> $2
 	| value BANG -> af.bangexpr($1)
 	| AMP value -> af.debug($2)
-	| value ARROW-OR-ACCESS lookup -> af.access($1, $3, false)
+	| value DOT lookup -> af.access($1, $3, false)
 	;
 
 lambda
-	: LSQUARE id-list ARROW-OR-ACCESS sequence RSQUARE -> af.fn($2, $4)
-	| LSQUARE ARROW-OR-ACCESS  sequence RSQUARE -> af.thunk($3)
+	: LSQUARE id-list ARROW-OR-COMPOSE sequence RSQUARE -> af.fn($2, $4)
+	| LSQUARE ARROW-OR-COMPOSE  sequence RSQUARE -> af.thunk($3)
 	;
 
 id-list

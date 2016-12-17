@@ -1,7 +1,7 @@
 alpha				[A-Za-z\$]
 sign				[\-\+]
 num					[0-9]
-arrow-or-access		\:
+arrow-or-compose	\:
 infix				\*
 seq					\;
 local				\@
@@ -9,10 +9,8 @@ equals				\=
 unit				\(\)
 newline				\n
 dot					\.
-access				\:
 bang				\!
 amp					\&
-call				\^
 
 quote				\'
 normal-char			[^\'\b\f\n\r\t\v]
@@ -36,7 +34,7 @@ number				{sign}? {num}+ ('.' {num}+)?
 \s+							/* skip whitespace */
 {number}					return 'NUM'
 {id}						return 'ID'
-{arrow-or-access}			return 'ARROW-OR-ACCESS'
+{arrow-or-compose}			return 'ARROW-OR-COMPOSE'
 {infix}						return 'INFIX'
 {seq}						return 'SEQ'
 {local}						return 'LOCAL'

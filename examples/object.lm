@@ -1,2 +1,2 @@
 @- = require 'lodash';
-&(-:floor -2.4)
+&(-.floor -2.4)

@@ -87,6 +87,7 @@ application
 ```
 
 ### Expressions
+[`$.add`](https://github.com/edge/stdlm#add)
 ```js
 $.add 2 3 -> 5
 console.log() // null
@@ -99,6 +100,7 @@ console.log! // (newline)
 ```
 
 ### Lambdas
+[`$.add`](https://github.com/edge/stdlm#add)
 ```js
 [x: $.add 2 x] 3 -> 5
 [x:[y: $.add x y]] 2 3 -> 5
@@ -170,6 +172,9 @@ It is best to use a function with better defined arity, like this one:
 
 ### Multivariate Functions
 The standard library provides currying and uncurrying facilities up to 5-arity.
+[`$.add`](https://github.com/edge/stdlm#add)
+[`$.uncurry2`](https://github.com/edge/stdlm#uncurry2)
+[`$.curry3`](https://github.com/edge/stdlm#curry3)
 ```js
 $.uncurry2 [x y: $.add x y] !! <1, 2> -> 3
 $.curry3 Date.UTC 1982 9 1 -> 402278400000
@@ -177,6 +182,7 @@ $.curry3 Date.UTC 1982 9 1 -> 402278400000
 ```
 
 You can also use multivariate lambda literals and spreads for multivariate calls.
+[`$.sum`](https://github.com/edge/stdlm#sum)
 ```js
 [x y z, $.sum <x, y, z>] !! <1, 2, 3> -> 6
 ((Array 5).fill 0).map [- i, i] -> [0, 1, 2, 3, 4]
@@ -186,11 +192,13 @@ You can also use multivariate lambda literals and spreads for multivariate calls
 
 #### T-combinator (`*`)
 - reverse application
+[`$.add`](https://github.com/edge/stdlm#add)
 ```js
 (2 * $.add) 1 -> 3
 ```
 
 - infix expressions
+[`$.add`](https://github.com/edge/stdlm#add)
 ```js
 $.add 2 3 -> 5
 2 *$.add 3 -> 5
@@ -198,6 +206,7 @@ $.add 2 3 -> 5
 ```
 
 - reverse postfix expressions
+[`$.add`](https://github.com/edge/stdlm#add)
 ```js
 3 *(2 *$.add) -> 5
 ```
@@ -210,6 +219,7 @@ Composes functions.
 
 #### P-combinator (`&`)
 Prints and returns the argument. This combinator has the lowest precedence -- to avoid confusion, place a space between the combinator and the expression if the expression contains spaces and is not delimited.
+[`$.add`](https://github.com/edge/stdlm#add)
 ```js
 &42 -> 42 // 42
 & $.add 40 2 -> 42 // 42

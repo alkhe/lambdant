@@ -1,0 +1,3 @@
+@create = [x args: new x !! args];
+@arr = create Array <5>;
+&((arr.fill 0).map(std.uncurry2 [- i: i]))

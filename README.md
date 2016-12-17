@@ -26,7 +26,7 @@ $ lm e file.lm
 ```
 
 ### Note
-These commands will automatically prepend an import statement for the standard library to each Lambdant source file. This is useful for testing and development, but suboptimal for production code. To opt out, suffix the mode argument with a dash:
+These commands will automatically prepend an import statement for the standard library to each Lambdant source file. This is useful for testing and development, but not recommended for production code. To opt out, suffix the mode argument with a dash:
 ```sh
 $ lm d- file.lm # dump file.lm without implicit prelude
 $ lm c- file.lm # compile file.lm without implicit prelude
@@ -35,10 +35,10 @@ $ lm e- file.lm # eval file.lm without implicit prelude
 
 ## Files
 
-- lang/grammar.g contains the Jison grammar
-- lang/lexer.l contains the Jison lex file
-- parser.js is the parser script, compiled by `jison ./lang/grammar.g ./lang/lexer.l -o .src/parser.js`
-- gen.js generates an ESTree compliant Javascript ast given a Lambdant ast
+- `./lang/grammar.g` contains the Jison grammar
+- `./lang/lexer.l` contains the Jison lex file
+- `./src/parser.js` is the parser script, compiled by `jison ./lang/grammar.g ./lang/lexer.l -o .src/parser.js`
+- `./src/gen.js` generates an ESTree compliant Javascript ast given a Lambdant ast
 
 ## Goals
 - mutation allowed, but discouraged
@@ -119,9 +119,28 @@ w -> 5
 -.now! -> 1481926731041
 ```
 
+## Javascript FFI
+
+### Constructors
+Javascript `new` has unconventional function call semantics; its arity changes depending on the context of the expression.
+
+```js
+new (Date) // <Date>
+new (Date)() // <Date>
+const now = new Date
+now() // Error!
+```
+
+It is best to use a function with better defined arity, like this one:
+
+```js
+@create = [x args: new x !! args];
+(create Array <5>).fill 0 -> [0, 0, 0, 0, 0]
+```
+
 ### Native Combinators
 
-**T-combinator** (`*`)
+#### T-combinator (`*`)
 - reverse application
 ```js
 2 * std.add 1 -> 3
@@ -139,25 +158,25 @@ std.add 2 3 -> 5
 3 *(2 *std.add) -> 5
 ```
 
-**B-combinator** (`:`)
+#### B-combinator (`:`)
 Composes functions.
 ```js
 (std.add 2 : std.add 1) 3 -> 6
 ```
 
-**P-combinator** (`&`)
+#### P-combinator (`&`)
 Prints and returns the argument.
 ```js
 &(std.add 40 2) // 42
 ```
 
-**E-combinator** (`!`)
-Evaluates a thunk. (Calls a function with zero arguments.)
+#### E-combinator (`!`)
+Evaluates a thunk. (Calls a function with zero arguments.) Prioritize over calling with null (`()`).
 ```js
 process.exit!
 ```
 
-**A-combinator** (`!!`)
+#### A'-combinator (`!!`)
 Applies a sequence to a multivariate function. (Spreads an array into a function.) Useful for Javascript ffi.
 ```js
 Date.UTC !! <1982, 9, 1> -> 402278400000
@@ -165,10 +184,8 @@ Date.UTC !! <1982, 9, 1> -> 402278400000
 
 ## Scripts
 
-`make build` generates ./src/parser.js from ./lang/grammar.g and ./lang/lexer.l.
-
-`make suite` evaluates each of the scripts in ./examples.
+`make build` generates ./src/parser.js from ./lang/grammar.g and ./lang/lexer.l.  
+`make suite` evaluates each of the scripts in ./examples.  
 
 ## TODO
-- add object and array literals
-- add multivariate function calls
+- add object literals

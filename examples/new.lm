@@ -1,1 +1,4 @@
-&((new Date)!.toUTCString!)
+@create = [x args: new x !! args];
+@get-time = [: create Date <Date.now!>];
+@now = get-time!;
+&(now.toUTCString!)

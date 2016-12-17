@@ -1,6 +1,6 @@
 {
   "name": "lambdant",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "A Javascript dialect for modern functional programming.",
   "main": "./src/index.js",
   "preferGlobal": true,

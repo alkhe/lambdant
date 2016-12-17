@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "preferGlobal": true,
   "bin": {
-    "lm": "./tools/cli.sh"
+    "lm": "./tools/cli.js"
   },
   "directories": {
     "example": "examples"

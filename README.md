@@ -27,6 +27,7 @@ A Javascript dialect for modern functional programming.
 2 -> 2
 'abc' -> 'abc'
 () -> null
+<1, 2, 3> -> [1, 2, 3]
 ```
 
 ### Expressions
@@ -124,6 +125,11 @@ Evaluates a thunk. (Calls a function with zero arguments.)
 process.exit!
 ```
 
+**A-combinator** (`!!`)
+Applies a sequence to a multivariate function. (Spreads an array into a function.) Useful for Javascript ffi.
+```js
+Date.UTC !! <1982, 9, 1> -> 402278400000
+```
 
 ## Scripts
 

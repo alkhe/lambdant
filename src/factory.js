@@ -13,6 +13,14 @@ const af = {
 		type: 'VALUE',
 		value
 	}),
+	array: {
+		type: 'ARRAY',
+		exprs: []
+	},
+	arrayadd: (array, expr) => ({
+		type: 'ARRAY',
+		exprs: array.exprs.concat(expr)
+	}),
 	expr: (fn, arg) => ({
 		type: 'EXPR',
 		fn,
@@ -21,6 +29,11 @@ const af = {
 	bangexpr: fn => ({
 		type: 'BANGEXPR',
 		fn
+	}),
+	apply: (fn, arg) => ({
+		type: 'APPLY',
+		fn,
+		arg
 	}),
 	debug: expr => ({
 		type: 'DEBUG',

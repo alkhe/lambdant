@@ -30,6 +30,8 @@ const member_expression = (object, property, computed) => ({ type: 'MemberExpres
 
 const sequence_expression = expressions => ({ type: 'SequenceExpression', expressions })
 
+const spread_element = argument => ({ type: 'SpreadElement', argument })
+
 module.exports = {
 	literal,
 	identifier,
@@ -44,5 +46,6 @@ module.exports = {
 	return_statement,
 	unary_expression,
 	member_expression,
-	sequence_expression
+	sequence_expression,
+	spread_element
 }

@@ -37,6 +37,7 @@ number				{sign}? {num}+ ('.' {num}+)?
 {unit}						return 'UNIT'
 '='							return 'EQUALS'
 '.'							return 'DOT'
+'!!'						return 'BANGBANG'
 '!'							return 'BANG'
 '&'							return 'AMP'
 '('							return 'LPAREN'

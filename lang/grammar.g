@@ -54,6 +54,7 @@ composition
 expr
 	: expr value -> af.expr($1, $2)
 	| expr INFIX value -> af.expr($3, $1)
+	| expr BANGBANG value -> af.apply($1, $3)
 	| value
 	;
 
@@ -67,15 +68,22 @@ value
 	| STRING -> af.value(eval($1))
 	| lookup
 	| lambda
-	| LPAREN composition RPAREN -> $2
 	| value BANG -> af.bangexpr($1)
 	| AMP value -> af.debug($2)
 	| value DOT lookup -> af.access($1, $3, false)
+	| LPAREN composition RPAREN -> $2
+	| LANGLE array-contents RANGLE -> $2
+	;
+
+array-contents
+	: array-contents COMMA expr -> af.arrayadd($1, $3)
+	| expr -> af.arrayadd(af.array, $1)
+	| -> af.array
 	;
 
 lambda
 	: LSQUARE id-list ARROW-OR-COMPOSE sequence RSQUARE -> af.fn($2, $4)
-	| LSQUARE ARROW-OR-COMPOSE  sequence RSQUARE -> af.thunk($3)
+	| LSQUARE ARROW-OR-COMPOSE sequence RSQUARE -> af.thunk($3)
 	;
 
 id-list

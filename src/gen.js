@@ -12,7 +12,8 @@ const {
 	return_statement,
 	unary_expression,
 	member_expression,
-	sequence_expression
+	sequence_expression,
+	spread_element
 } = require('./estree-factory')
 
 const CONSOLE_ID = identifier('console')
@@ -45,6 +46,8 @@ const gen = node => {
 		}
 		case 'VALUE':
 			return literal(node.value)
+		case 'ARRAY':
+			return array_expression(node.exprs.map(gen))
 		case 'ACCESS':
 			return member_expression(gen(node.object), gen(node.property), node.computed)
 		case 'EXPR':
@@ -56,6 +59,11 @@ const gen = node => {
 			return call_expression(
 				gen(node.fn),
 				[]
+			)
+		case 'APPLY':
+			return call_expression(
+				gen(node.fn),
+				[spread_element(gen(node.arg))]
 			)
 		case 'COMPOSE':
 			return compose_functions(node.fns)

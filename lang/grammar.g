@@ -43,7 +43,7 @@ definition
 	;
 
 assignment
-	: lookup EQUALS composition -> af.assign($1, $3)
+	: memory EQUALS composition -> af.assign($1, $3)
 	;
 
 composition
@@ -62,17 +62,26 @@ lookup
 	: ID -> af.id($1)
 	;
 
+memory
+	: lookup
+	| value DOT lookup -> af.access($1, $3, false)
+	| value DOT atom -> af.access($1, $3, true)
+	;
+
 value
 	: NUM -> af.number($1)
 	| UNIT -> af.value(null)
 	| STRING -> af.value(eval($1))
-	| lookup
+	| memory
 	| lambda
 	| value BANG -> af.bangexpr($1)
 	| AMP value -> af.debug($2)
-	| value DOT lookup -> af.access($1, $3, false)
-	| LPAREN composition RPAREN -> $2
 	| LANGLE array-contents RANGLE -> $2
+	| atom
+	;
+
+atom
+	: LPAREN composition RPAREN -> $2
 	;
 
 array-contents

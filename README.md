@@ -15,6 +15,11 @@ Locally install the [standard library](https://github.com/edge/stdlm):
 $ npm i stdlm
 ```
 
+Add the following line to your `.vimrc` for syntax highlighting:
+```vim
+au BufEnter,BufNewFile,BufRead *.lm set filetype=javascript
+```
+
 ## Hello World
 
 `hello.lm`

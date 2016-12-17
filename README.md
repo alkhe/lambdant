@@ -64,6 +64,12 @@ plus 2 3 -> 5
 3 *(2 *plus) -> 5
 ```
 
+**B-combinator** (`.`)
+Composes functions.
+```js
+(add 2) . inc 3 -> 6
+```
+
 **P-combinator** (`&`)
 Prints and returns the argument.
 ```js

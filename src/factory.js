@@ -43,6 +43,12 @@ const af = {
 		type: 'THUNK',
 		expr
 	}),
+	compose: (left, right) => ({
+		type: 'COMPOSE',
+		fns: left.type === 'COMPOSE'
+			? left.fns.concat(right)
+			: [left, right]
+	}),
 	seqadd: (seq, statement) => ({
 		type: 'SEQ',
 		exprs: seq.exprs.concat(statement),

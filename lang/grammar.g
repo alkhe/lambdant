@@ -44,6 +44,7 @@ call
 	: expr value -> af.expr($1, $2)
 	| expr BANG -> af.bangexpr($1)
 	| AMP value -> af.debug($2)
+	| expr DOT value -> af.compose($1, $3)
 	;
 
 expr

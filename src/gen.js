@@ -18,11 +18,20 @@ const {
 const CONSOLE_ID = identifier('console')
 const LOG_ID = identifier('log')
 const CONSOLE_LOG = member_expression(CONSOLE_ID, LOG_ID, false)
-const debug_expression = expression =>
-	sequence_expression([
-		call_expression(CONSOLE_LOG, [expression]),
-		expression
-	])
+const debug_expression = expression => call_expression(LOG_ID, [expression])
+
+const compose_functions = fns => {
+	const chain = fns.reduceRight(
+		(arg, fn) => call_expression(gen(fn), [arg]),
+		identifier('__arg')
+	)
+
+	return arrow_function_expression(
+		[identifier('__arg')],
+		chain,
+		true
+	)
+}
 
 const gen = node => {
 	switch (node.type) {
@@ -48,6 +57,8 @@ const gen = node => {
 				gen(node.fn),
 				[]
 			)
+		case 'COMPOSE':
+			return compose_functions(node.fns)
 		case 'DEBUG':
 			return debug_expression(gen(node.expr))
 		case 'DECLARE':

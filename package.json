@@ -1,13 +1,13 @@
 {
   "name": "lambdant",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Javascript dialect for modern functional programming.",
   "main": "./src/index.js",
   "preferGlobal": true,
   "bin": {
     "lmc": "./tools/compile.js",
     "lmd": "./tools/dump.js",
-	"lm": "./tools/run.sh"
+    "lm": "./tools/run.sh"
   },
   "directories": {
     "example": "examples"

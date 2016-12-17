@@ -92,6 +92,7 @@ array-contents
 
 lambda
 	: LSQUARE id-list ARROW-OR-COMPOSE sequence RSQUARE -> af.fn($2, $4)
+	| LSQUARE id-list COMMA sequence RSQUARE -> af.lambda($2, $4)
 	| LSQUARE ARROW-OR-COMPOSE sequence RSQUARE -> af.thunk($3)
 	;
 

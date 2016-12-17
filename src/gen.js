@@ -78,7 +78,7 @@ const gen = node => {
 		case 'LAMBDA': {
 			const body_ast = gen(node.expr)
 			return arrow_function_expression(
-				[gen(node.arg)],
+				node.args.map(gen),
 				body_ast,
 				body_ast.type !== 'BlockStatement'
 			)

@@ -41,15 +41,15 @@ const af = {
 	}),
 	fn: (args, expr) => {
 		const len = args.length
-		let l = af.lambda(args[len - 1], expr)
+		let l = af.lambda([args[len - 1]], expr)
 		for (let i = len - 2; i >= 0; i--) {
-		l = af.lambda(args[i], l)
-	}
+			l = af.lambda([args[i]], l)
+		}
 		return l
 	},
-	lambda: (arg, expr) => ({
+	lambda: (args, expr) => ({
 		type: 'LAMBDA',
-		arg,
+		args,
 		expr
 	}),
 	thunk: expr => ({

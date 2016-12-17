@@ -1,2 +1,6 @@
 @inc = std.add 1;
-&<1, 1 *std.add 1, (inc : inc) 1>
+@xs = <1, 1 *std.add 1, (inc : inc) 1>;
+# noop
+xs.forEach [:];
+&xs
+

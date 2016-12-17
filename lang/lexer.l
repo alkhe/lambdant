@@ -11,6 +11,7 @@ newline				\n
 dot					\.
 access				\:
 bang				\!
+amp					\&
 
 quote				\'
 normal-char			[^\'\b\f\n\r\t\v]
@@ -42,6 +43,7 @@ number				{sign}? {num}+ ('.' {num}+)?
 {unit}						return 'UNIT'
 {dot}						return 'DOT'
 {bang}						return 'BANG'
+{amp}						return 'AMP'
 '('							return 'LPAREN'
 ')'							return 'RPAREN'
 '['							return 'LSQUARE'

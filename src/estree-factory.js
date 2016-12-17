@@ -28,6 +28,8 @@ const unary_expression = (operator, prefix, argument) => ({ type: 'UnaryExpressi
 
 const member_expression = (object, property, computed) => ({ type: 'MemberExpression', object, property, computed })
 
+const sequence_expression = expressions => ({ type: 'SequenceExpression', expressions })
+
 module.exports = {
 	literal,
 	identifier,
@@ -41,5 +43,6 @@ module.exports = {
 	assignment_expression,
 	return_statement,
 	unary_expression,
-	member_expression
+	member_expression,
+	sequence_expression
 }

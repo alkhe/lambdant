@@ -1,1 +1,1 @@
-log ('Hello, ' *plus 'world!')
+&('Hello, ' *plus 'world!')

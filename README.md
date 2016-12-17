@@ -64,6 +64,12 @@ plus 2 3 -> 5
 3 *(2 *plus) -> 5
 ```
 
+**P-combinator** (`&`)
+Prints and returns the argument.
+```js
+&(plus 40 2) // 42
+```
+
 ## Scripts
 
 `node tools/dump file.lm` ouptuts the source, Lambdant ast, and estree ast of a Lambdant script.

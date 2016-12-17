@@ -1,5 +1,5 @@
 @- = 5;
-log 5;
+&5;
 
 @the-answer = 42;
-log the-answer
+&the-answer

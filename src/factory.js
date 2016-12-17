@@ -22,6 +22,10 @@ const af = {
 		type: 'BANGEXPR',
 		fn
 	}),
+	debug: expr => ({
+		type: 'DEBUG',
+		expr
+	}),
 	fn: (args, expr) => {
 		const len = args.length
 		let l = af.lambda(args[len - 1], expr)

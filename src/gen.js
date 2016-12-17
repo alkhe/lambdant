@@ -11,8 +11,18 @@ const {
 	assignment_expression,
 	return_statement,
 	unary_expression,
-	member_expression
+	member_expression,
+	sequence_expression
 } = require('./estree-factory')
+
+const CONSOLE_ID = identifier('console')
+const LOG_ID = identifier('log')
+const CONSOLE_LOG = member_expression(CONSOLE_ID, LOG_ID, false)
+const debug_expression = expression =>
+	sequence_expression([
+		call_expression(CONSOLE_LOG, [expression]),
+		expression
+	])
 
 const gen = node => {
 	switch (node.type) {
@@ -38,6 +48,8 @@ const gen = node => {
 				gen(node.fn),
 				[]
 			)
+		case 'DEBUG':
+			return debug_expression(gen(node.expr))
 		case 'DECLARE':
 			return variable_declaration(gen(node.id), null)
 		case 'DEFINE':

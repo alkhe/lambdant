@@ -1,1 +1,1 @@
-log ((require 'lodash'):now!)
+&((require 'lodash'):now!)

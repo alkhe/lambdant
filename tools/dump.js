@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { parse, generate } = require('../src')
 const { readFileSync } = require('fs')
 

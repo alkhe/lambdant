@@ -5,8 +5,9 @@
   "main": "./src/index.js",
   "preferGlobal": true,
   "bin": {
-    "lmc": "node ./tools/compile.js",
-    "lmd": "node ./tools/dump.js"
+    "lmc": "./tools/compile.js",
+    "lmd": "./tools/dump.js",
+	"lm": "./tools/run.sh"
   },
   "directories": {
     "example": "examples"

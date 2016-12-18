@@ -99,7 +99,8 @@ nine
 	| UNIT -> af.value(null)
 	| STRING -> af.value(eval($1))
 	| lambda
-	| LANGLE array-contents RANGLE -> $2
+	| array
+	| object
 	| memory
 	| ten
 	;
@@ -118,6 +119,26 @@ ten
 
 lookup
 	: ID -> af.id($1)
+	;
+
+object
+	: LBRACE object-entries RBRACE -> $2
+	;
+
+object-entries
+	: object-entries COMMA object-entry -> af.objectadd($1, $3)
+	| object-entry -> af.objectadd(af.object, $1)
+	| -> af.object
+	;
+
+object-entry
+	: lookup ARROW-OR-COMPOSE full -> af.objectentry($1, $3, false)
+	| ten ARROW-OR-COMPOSE full -> af.objectentry($1, $3, true)
+	| lookup -> af.shortentry($1)
+	;
+
+array
+	: LANGLE array-contents RANGLE -> $2
 	;
 
 array-contents

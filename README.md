@@ -91,7 +91,6 @@ $ lm e- file.lm # evaluate file.lm without implicit prelude
 $ lm a- 'code' # evaluate code without implicit prelude
 ```
 
-
 ## Goals
 - mutation allowed, but discouraged
 - easy and intuitive javascript ffi by producing javascript code and using curry/uncurry
@@ -117,6 +116,7 @@ application
 'abc' -> 'abc'
 () -> null
 <1, 2, 3> -> [1, 2, 3]
+{ a: 5, b: 6, c } -> { a: 5, b: 6, c: c }
 ```
 
 ### Expressions
@@ -278,4 +278,7 @@ Date.UTC !! <1982, 9, 1> -> 402278400000
 `make suite` evaluates each of the scripts in ./examples.  
 
 ## TODO
-- add object literals
+- conditionals
+- loops (optional, can be implemented with conditionals and recursion)
+- webpack loader
+- destructuring assignment

@@ -34,6 +34,10 @@ const sequence_expression = expressions => ({ type: 'SequenceExpression', expres
 
 const spread_element = argument => ({ type: 'SpreadElement', argument })
 
+const object_expression = properties => ({ type: 'ObjectExpression', properties })
+
+const property = (key, value, computed, shorthand) => ({ type: 'Property', key, value, computed, shorthand, kind: 'init' })
+
 module.exports = {
 	literal,
 	identifier,
@@ -50,5 +54,7 @@ module.exports = {
 	unary_expression,
 	member_expression,
 	sequence_expression,
-	spread_element
+	spread_element,
+	object_expression,
+	property
 }

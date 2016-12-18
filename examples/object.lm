@@ -1,2 +1,10 @@
-@_ = require 'lodash';
-& _.floor -2.4
+@x = { prop: <> };
+@obj = {
+	a: 5,
+	b: 6,
+	('c'): 7,
+	x
+};
+&obj.a;
+&obj.c;
+&obj.x

@@ -14,7 +14,9 @@ const {
 	unary_expression,
 	member_expression,
 	sequence_expression,
-	spread_element
+	spread_element,
+	object_expression,
+	property
 } = require('./estree-factory')
 
 const STD_ID = identifier('$')
@@ -49,6 +51,12 @@ const gen = node => {
 			return literal(node.value)
 		case 'ARRAY':
 			return array_expression(node.exprs.map(gen))
+		case 'OBJECT':
+			return object_expression(node.entries.map(gen))
+		case 'ENTRY':
+			return property(gen(node.key), gen(node.value), node.computed, false)
+		case 'SHORTENTRY':
+			return property(gen(node.key), {}, false, true)
 		case 'ACCESS':
 			return member_expression(gen(node.object), gen(node.property), node.computed)
 		case 'EXPR': {

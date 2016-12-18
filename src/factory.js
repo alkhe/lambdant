@@ -54,6 +54,24 @@ const af = {
 		type: 'THUNK',
 		expr
 	}),
+	objectentry: (key, value, computed) => ({
+		type: 'ENTRY',
+		key,
+		value,
+		computed
+	}),
+	shortentry: key => ({
+		type: 'SHORTENTRY',
+		key
+	}),
+	object: {
+		type: 'OBJECT',
+		entries: []
+	},
+	objectadd: (object, entry) => ({
+		type: 'OBJECT',
+		entries: object.entries.concat(entry)
+	}),
 	compose: (left, right) => ({
 		type: 'COMPOSE',
 		fns: left.type === 'COMPOSE'

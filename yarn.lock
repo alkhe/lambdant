@@ -161,9 +161,9 @@ source-map@~0.2.0:
   dependencies:
     amdefine ">=0.0.4"
 
-stdlm@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/stdlm/-/stdlm-0.3.0.tgz#1fa40baf1aaa1966c18ed81a3921f2137c99d967"
+stdlm@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/stdlm/-/stdlm-0.4.0.tgz#9ef0003fc83bd5906505aaf9e87aeb8579ef693f"
 
 type-check@~0.3.2:
   version "0.3.2"

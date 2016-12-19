@@ -39,7 +39,7 @@
   "devDependencies": {
     "jison": "^0.4.17",
     "lodash": "^4.17.2",
-    "stdlm": "^0.3.0"
+    "stdlm": "^0.4.0"
   },
   "engines": {
     "node": ">=6.x",

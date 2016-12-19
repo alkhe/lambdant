@@ -104,11 +104,16 @@ nine
 	| UNIT -> af.value(null)
 	| STRING -> af.value(eval($1))
 	| lambda
-	| array
-	| object
-	| lookup
+	| pattern
 	| member
 	| ten
+	;
+
+// expressions that are valid for assignments and arguments
+pattern
+	: lookup
+	| object
+	| array
 	;
 
 member
@@ -159,6 +164,6 @@ lambda
 	;
 
 arg-list
-	: arg-list lookup -> $1.concat($2)
-	| lookup -> [$1]
+	: arg-list pattern -> $1.concat($2)
+	| pattern -> [$1]
 	;

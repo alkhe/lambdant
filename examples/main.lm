@@ -1,8 +1,0 @@
-@main = [:
-	@square = [x: x *$.mul x];
-	& 7 *[x y: x *$.add y] 5;
-
-	@$25 = square (2 *$.add 3);
-	&$25
-];
-main!

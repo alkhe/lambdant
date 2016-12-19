@@ -100,6 +100,7 @@ $ lm a- 'code' # evaluate code without implicit prelude
 ## Language
 
 ### Operator Associativity/Precedence
+
 ```
 ()
 .
@@ -141,6 +142,7 @@ console.log! // (newline)
 [: log 'in a thunk!']! // in a thunk!
 [:] -> (noop)
 [x y, $.add x y] !! <1, 2> -> 3
+[{ add } <a, b>: add a b] $ <1, 2> -> 3
 ```
 
 ### Blocks
@@ -166,8 +168,12 @@ console.log!
 
 ### Definition
 ```js
-@name = 'John'
+@name = 'John';
 name -> 'John'
+
+@{ x } = { x: 40 };
+@<y> = <2>;
+$.add x y -> 42
 ```
 
 ### Assignment
@@ -175,6 +181,10 @@ name -> 'John'
 @w;
 w = 5;
 w -> 5
+
+@a; @b;
+<a, b> = <1, 2>;
+$.add a b -> 3
 ```
 
 ### Members
@@ -281,4 +291,3 @@ Date.UTC !! <1982, 9, 1> -> 402278400000
 - conditionals
 - loops (optional, can be implemented with conditionals and recursion)
 - webpack loader
-- destructuring assignment

@@ -6,10 +6,11 @@ const { parse, generate, serialize } = require(resolve(__dirname, '../src'))
 const { spawn } = require('child_process')
 const { red } = require('colors')
 
-const [mode, ...files] = process.argv.slice(2)
+const [mode, input] = process.argv.slice(2)
 
 const read = f => readFileSync(f, 'utf8')
 const peek = x => (console.dir(x, { depth: null, colors: true }), x)
+const peeks = s => (console.log(s), x)
 
 const DUMP_RULE = 'd'
 const COMPILE_RULE = 'c'
@@ -26,36 +27,35 @@ const pre_parse = s => mode.length > 1 && mode[1] === NO_PRELUDE
 
 const generate_code = s => serialize(generate(parse(pre_parse(s))))
 
-const no_files = () => console.log(red(`no input files`))
+const no_input = () => console.log(red(`no input`))
 const bad_mode = mode => console.log(red(`unrecognized mode: ${ mode }`))
 
-if (files.length < 1) {
-	no_files()
+if (input == null) {
+	no_input()
 } else if (!mode || mode.length < 1) {
 	bad_mode(mode)
 } else {
 	switch (mode[0]) {
 		case DUMP_RULE: {
-			files
-				.map(read).map(peek)
-				.map(s => parse(pre_parse(s))).map(peek)
-				.map(generate).map(peek)
-				.map(serialize).map(peek)
+			const source = peeks(read(input))
+			const lm_ast = peek(parse(pre_parse(source)))
+			const es_ast = peek(generate(lm_ast))
+			peek(serialize(es_ast))
 			break
 		}
 		case COMPILE_RULE: {
-			process.stdout.write(files.map(read).map(generate_code).join(';'))
+			process.stdout.write(generate_code(read(input)))
 			break
 		}
 		case EVAL_RULE: {
-			const source = files.map(read).map(generate_code).join(';')
+			const source = generate_code(read(input))
 			const child = spawn('node', [], { stdio: ['pipe', 'inherit', 'inherit'] })
 			child.stdin.write(source)
 			child.stdin.end()
 			break
 		}
 		case EVAL_ARG_RULE: {
-			const source = files.map(generate_code).join(',')
+			const source = generate_code(input)
 			const child = spawn('node', [], { stdio: ['pipe', 'inherit', 'inherit'] })
 			child.stdin.write(source)
 			child.stdin.end()

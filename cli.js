@@ -2,7 +2,7 @@
 
 const { readFileSync } = require('fs')
 const { resolve } = require('path')
-const { parse, generate, serialize } = require(resolve(__dirname, '../src'))
+const { parse, generate, serialize } = require(resolve(__dirname, './src'))
 const { spawn } = require('child_process')
 const { red } = require('colors')
 
@@ -10,7 +10,7 @@ const [mode, input] = process.argv.slice(2)
 
 const read = f => readFileSync(f, 'utf8')
 const peek = x => (console.dir(x, { depth: null, colors: true }), x)
-const peeks = s => (console.log(s), x)
+const peeks = s => (console.log(s), s)
 
 const DUMP_RULE = 'd'
 const COMPILE_RULE = 'c'
@@ -40,7 +40,7 @@ if (input == null) {
 			const source = peeks(read(input))
 			const lm_ast = peek(parse(pre_parse(source)))
 			const es_ast = peek(generate(lm_ast))
-			peek(serialize(es_ast))
+			peeks(serialize(es_ast))
 			break
 		}
 		case COMPILE_RULE: {

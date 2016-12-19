@@ -140,8 +140,16 @@ const gen = node => {
 
 module.exports = node => {
 	const body_ast = gen(node)
-	return call_expression(
-		arrow_function_expression([], body_ast, body_ast.type !== 'BlockStatement'),
-		[]
-	)
+	const { body } = body_ast
+	const body_len = body.length
+
+	if (body_len > 0) {
+		const last_expr = body.pop()
+		body.push(last_expr.type === 'ReturnStatement'
+			? last_expr.argument
+			: last_expr
+		)
+	}
+
+	return body_ast
 }

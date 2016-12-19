@@ -324,3 +324,4 @@ Date.UTC !! <1982, 9, 1> -> 402278400000
 - loops (optional, can be implemented with conditionals and recursion)
 - webpack loader
 - dedicated syntax highlighting
+- add tests

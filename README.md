@@ -1,6 +1,19 @@
 # lambdant
 A Javascript dialect for modern functional programming.
 
+## Table of Contents
+
+* [Get](#get)
+* [Hello World](#hello-world)
+* [Ecosystem](#ecosystem)
+* [Files](#files)
+* [Scripts](#scripts)
+* [Usage](#usage)
+* [Goals](#goals)
+* [Language](#language)
+* [Javascript FFI](#javascript-ffi)
+* [TODO](#todo)
+
 ## Get
 
 Globally install the cli tools:
@@ -32,6 +45,10 @@ $ lm e hello.lm
   'Hello, world!'
 ```
 
+## Ecosystem
+[stdlm](https://github.com/edge/stdlm) - standard library
+[lambdant-loader](https://github.com/edge/lambdant-loader) - webpack loader
+
 ## Files
 
 - `./lang/grammar.g` contains the Jison grammar
@@ -42,6 +59,11 @@ $ lm e hello.lm
   - `parse(LambdantSource) -> LambdantAST` parses a Lambdant source string and returns a Lambdant ast
   - `generate(LambdantAST) -> ESTreeAST` converts a Lambdant ast into an ESTree ast
   - `serialize(ESTreeAST) -> JavascriptSource` generates Javascript source from an ESTree ast
+
+## Scripts
+
+`make build` generates ./src/parser.js from ./lang/grammar.g and ./lang/lexer.l.  
+`make suite` evaluates each of the scripts in ./examples.  
 
 ## Usage
 
@@ -315,13 +337,7 @@ Useful for Javascript FFI.
 Date.UTC !! <1982, 9, 1> -> 402278400000
 ```
 
-## Scripts
-
-`make build` generates ./src/parser.js from ./lang/grammar.g and ./lang/lexer.l.  
-`make suite` evaluates each of the scripts in ./examples.  
-
 ## TODO
 - loops (optional, can be implemented with conditionals and recursion)
-- webpack loader
 - dedicated syntax highlighting
 - add tests

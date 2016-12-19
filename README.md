@@ -46,8 +46,8 @@ $ lm e hello.lm
 ```
 
 ## Ecosystem
-[stdlm](https://github.com/edge/stdlm) - standard library
-[lambdant-loader](https://github.com/edge/lambdant-loader) - webpack loader
+- [stdlm](https://github.com/edge/stdlm) - standard library
+- [lambdant-loader](https://github.com/edge/lambdant-loader) - webpack loader
 
 ## Files
 

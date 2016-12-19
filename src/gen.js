@@ -22,17 +22,18 @@ const {
 
 const STD_ID = identifier('$')
 const LOG_ID = identifier('log')
+const __ARG_ID = identifier('__arg')
 const STD_LOG = member_expression(STD_ID, LOG_ID, false)
 const debug_expression = expression => call_expression(STD_LOG, [expression])
 
 const compose_functions = fns => {
 	const chain = fns.reduceRight(
 		(arg, fn) => call_expression(gen(fn), [arg]),
-		identifier('__arg')
+		__ARG_ID
 	)
 
 	return arrow_function_expression(
-		[identifier('__arg')],
+		[__ARG_ID],
 		chain,
 		true
 	)

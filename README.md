@@ -185,6 +185,7 @@ console.log!
 ```
 
 ### Definition
+[`add`](https://github.com/edge/stdlm#add)
 ```js
 @name = 'John';
 name -> 'John'

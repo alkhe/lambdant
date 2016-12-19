@@ -16,7 +16,8 @@ const {
 	sequence_expression,
 	spread_element,
 	object_expression,
-	property
+	property,
+	conditional_expression
 } = require('./estree-factory')
 
 const STD_ID = identifier('$')
@@ -130,6 +131,8 @@ const gen = node => {
 
 			return block_statement([])
 		}
+		case 'CONDITIONAL':
+			return conditional_expression(gen(node.test), gen(node.consequent), gen(node.alternative))
 	}
 	throw new Error(`unrecognized node type: ${ node.type } on node ${ node }`)
 }

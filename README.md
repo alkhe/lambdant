@@ -83,7 +83,7 @@ write('script.js', js_source)
 ```
 
 ### Note
-These commands will automatically prepend an import statement for the standard library to each Lambdant source file. This is useful for testing and development, but not recommended for production code. To opt out, suffix the mode argument with a dash:
+These commands will automatically prepend an import statement for the standard library (`@$ = require 'stdlm';`) to each Lambdant source file. This is useful for testing and development, but not recommended for production code. To opt out, suffix the mode argument with a dash:
 ```sh
 $ lm d- file.lm # dump file.lm without implicit prelude
 $ lm c- file.lm # compile file.lm without implicit prelude
@@ -99,6 +99,12 @@ $ lm a- 'code' # evaluate code without implicit prelude
 
 ## Language
 
+**Note:** for all examples below, assume that standard library functions have been preassigned e.g.
+```js
+@{ add, sub } = require 'stdlm';
+add 2 (sub 2 1) -> 3
+```
+
 ### Operator Associativity/Precedence
 
 ```
@@ -108,6 +114,7 @@ $ lm a- 'code' # evaluate code without implicit prelude
 application
 * !!
 :
+?/
 &
 ```
 
@@ -121,27 +128,38 @@ application
 ```
 
 ### Expressions
-[`$.add`](https://github.com/edge/stdlm#add)
+[`add`](https://github.com/edge/stdlm#add)
 ```js
-$.add 2 3 -> 5
+add 2 3 -> 5
 console.log() // null
 console.log! // (newline)
 ```
 
 ### Comments
+- single comments begin with a `#` and end with a newline
+- multiline comments begin with a `##` and end with `##` or a single comment
+
 ```js
-# this is a comment
+# single comment
+
+## begin comment
+&'this code will not be reached'
+# end comment
+
+# begin comment
+&'this code will be reached'
+# end comment
 ```
 
 ### Lambdas
-[`$.add`](https://github.com/edge/stdlm#add)
+[`add`](https://github.com/edge/stdlm#add)
 ```js
-[x: $.add 2 x] 3 -> 5
-[x:[y: $.add x y]] 2 3 -> 5
-[x y: $.add x y] 2 3 -> 5
+[x: add 2 x] 3 -> 5
+[x:[y: add x y]] 2 3 -> 5
+[x y: add x y] 2 3 -> 5
 [: log 'in a thunk!']! // in a thunk!
 [:] -> (noop)
-[x y, $.add x y] !! <1, 2> -> 3
+[x y, add x y] !! <1, 2> -> 3
 [{ add } <a, b>: add a b] $ <1, 2> -> 3
 ```
 
@@ -173,7 +191,7 @@ name -> 'John'
 
 @{ x } = { x: 40 };
 @<y> = <2>;
-$.add x y -> 42
+add x y -> 42
 ```
 
 ### Assignment
@@ -184,7 +202,20 @@ w -> 5
 
 @a; @b;
 <a, b> = <1, 2>;
-$.add a b -> 3
+add a b -> 3;
+
+@obj = { a: 5 };
+obj.a = 42;
+obj.a -> 42
+```
+
+### Conditionals
+[`is`](https://github.com/edge/stdlm#is)
+[`not`](https://github.com/edge/stdlm#not)
+[`mod`](https://github.com/edge/stdlm#mod)
+```js
+@odd = [x: (not : is 0) (mod x 2)];
+@result = odd 3 ? 'odd!' / 'even!' -> 'odd!'
 ```
 
 ### Members
@@ -205,26 +236,26 @@ const now = new Date
 now() // Error!
 ```
 
-It is best to use a function with better defined arity, like [`$.create`](https://github.com/edge/stdlm#create):
+It is best to use a function with better defined arity, like [`create`](https://github.com/edge/stdlm#create):
 ```js
-($.create Array <5>).fill 0 -> [0, 0, 0, 0, 0]
+(create Array <5>).fill 0 -> [0, 0, 0, 0, 0]
 ```
 
 ### Multivariate Functions
 The standard library provides currying and uncurrying facilities up to 5-arity.  
-[`$.add`](https://github.com/edge/stdlm#add)
-[`$.uncurry2`](https://github.com/edge/stdlm#uncurry2)
-[`$.curry3`](https://github.com/edge/stdlm#curry3)
+[`add`](https://github.com/edge/stdlm#add)
+[`uncurry2`](https://github.com/edge/stdlm#uncurry2)
+[`curry3`](https://github.com/edge/stdlm#curry3)
 ```js
-$.uncurry2 [x y: $.add x y] !! <1, 2> -> 3
-$.curry3 Date.UTC 1982 9 1 -> 402278400000
-((Array 5).fill 0).map ($.uncurry2 [- i: i]) -> [0, 1, 2, 3, 4]
+uncurry2 [x y: add x y] !! <1, 2> -> 3
+curry3 Date.UTC 1982 9 1 -> 402278400000
+((Array 5).fill 0).map (uncurry2 [- i: i]) -> [0, 1, 2, 3, 4]
 ```
 
 You can also use multivariate lambda literals and spreads for multivariate calls.  
-[`$.sum`](https://github.com/edge/stdlm#sum)
+[`sum`](https://github.com/edge/stdlm#sum)
 ```js
-[x y z, $.sum <x, y, z>] !! <1, 2, 3> -> 6
+[x y z, sum <x, y, z>] !! <1, 2, 3> -> 6
 ((Array 5).fill 0).map [- i, i] -> [0, 1, 2, 3, 4]
 ```
 
@@ -232,40 +263,41 @@ You can also use multivariate lambda literals and spreads for multivariate calls
 
 #### T-combinator (`*`)
 reverse application  
-[`$.add`](https://github.com/edge/stdlm#add)
+[`add`](https://github.com/edge/stdlm#add)
 ```js
-(2 * $.add) 1 -> 3
+(2 * add) 1 -> 3
 ```
 
 infix expressions  
-[`$.add`](https://github.com/edge/stdlm#add)
+[`add`](https://github.com/edge/stdlm#add)
 ```js
-$.add 2 3 -> 5
-2 *$.add 3 -> 5
-3 *[x: $.add 2 x] -> 5
+add 2 3 -> 5
+2 *add 3 -> 5
+3 *[x: add 2 x] -> 5
 ```
 
 reverse postfix expressions  
-[`$.add`](https://github.com/edge/stdlm#add)
+[`add`](https://github.com/edge/stdlm#add)
 ```js
-3 *(2 *$.add) -> 5
+3 *(2 *add) -> 5
 ```
 
 #### B-combinator (`:`)
 Composes functions.
+[`add`](https://github.com/edge/stdlm#add)
 ```js
-($.add 2 : $.add 1) 3 -> 6
+(add 2 : add 1) 3 -> 6
 ```
 
 #### P-combinator (`&`)
 Prints and returns the argument.  
 This combinator has the lowest precedence -- to avoid confusion, place a space between the combinator and the expression if the expression contains a space and is not delimited.  
-Calls [`$.log`](https://github.com/edge/stdlm#log) under the hood; reassigning `$` will break this functionality.
-[`$.add`](https://github.com/edge/stdlm#add)
+Calls [`log`](https://github.com/edge/stdlm#log) under the hood; reassigning `$` will break this functionality.
+[`add`](https://github.com/edge/stdlm#add)
 ```js
 &42 -> 42 // 42
-& $.add 40 2 -> 42 // 42
-&($.add 40 2) -> 42 // 42
+& add 40 2 -> 42 // 42
+&(add 40 2) -> 42 // 42
 ```
 
 #### E-combinator (`!`)
@@ -288,6 +320,6 @@ Date.UTC !! <1982, 9, 1> -> 402278400000
 `make suite` evaluates each of the scripts in ./examples.  
 
 ## TODO
-- conditionals
 - loops (optional, can be implemented with conditionals and recursion)
 - webpack loader
+- dedicated syntax highlighting

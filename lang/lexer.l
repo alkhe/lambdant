@@ -1,5 +1,4 @@
 word-char			[A-Za-z\_\$]
-sign				[\-\+]
 num					[0-9]
 
 quote				\'
@@ -12,17 +11,22 @@ scomment			\#
 scomment-char		[^\n]
 scomment-text		{scomment-char}*\n
 
-id					{word-char} ({word-char} | {num})*
-number				{sign}? {num}+ ('.' {num}+)?
+mcomment			\#\#
+mcomment-char		[^\#]
+mcomment-terminate	\# | ([^\n]* \n)
+mcomment-text		{mcomment-char}* \# {mcomment-terminate}
 
-%x scomment string
+id					{word-char} ({word-char} | {num})*
+number				[\+\-]? {num}+ ('.' {num}+)?
+
+%x scomment mcomment string
 
 %%
 
 \s+							/* skip whitespace */
 {number}					return 'NUM'
 {id}						return 'ID'
-':'							return 'ARROW-OR-COMPOSE'
+':'							return 'COLON'
 '*'							return 'INFIX'
 ';' 						return 'SEQ'
 '@'							return 'LOCAL'
@@ -41,6 +45,11 @@ number				{sign}? {num}+ ('.' {num}+)?
 '{'							return 'LBRACE'
 '}'							return 'RBRACE'
 ','							return 'COMMA'
+'?'							return 'QUESTION'
+'/'							return 'SOLIDUS'
+
+{mcomment}					this.begin('mcomment')
+<mcomment>{mcomment-text}	this.popState()
 
 {scomment}					this.begin('scomment')
 <scomment>{scomment-text}	this.popState()

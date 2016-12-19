@@ -112,6 +112,12 @@ const af = {
 		object,
 		property,
 		computed
+	}),
+	conditional: (test, consequent, alternative) => ({
+		type: 'CONDITIONAL',
+		test,
+		consequent,
+		alternative
 	})
 }
 

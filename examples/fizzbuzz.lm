@@ -1,0 +1,9 @@
+@{ add, mod, is } = $;
+@xs = ((Array 20).fill 0).map [_ i, i *add 1];
+@fb = [n:
+	@<d3, d5> = <3, 5>.map (is 0 : mod n);
+	d3
+		? (d5 ? 'FizzBuzz' / 'Fizz')
+		/ (d5 ? 'Buzz' / String n)
+];
+& xs.map fb

@@ -1,2 +1,6 @@
 # this comment doesn't affect my code!
+&42;
+## this is a multiline comment (remove one pound sign to uncomment code)
+&42;
+# multiline ends here
 &42

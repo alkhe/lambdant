@@ -3,8 +3,9 @@
 
 %left DOT
 %left INFIX
-%left ARROW-OR-ACCESS
+%left COLON
 %nonassoc AMP
+%right QUESTION SOLIDUS
 %nonassoc BANG
 
 %%
@@ -53,20 +54,27 @@ assignment
 
 // base expression, zero precedence
 full
-	: four
+	: three
 	;
 
-// post-composition
+
+// post-conditional
 // P-combinator
-four
+three
 	: AMP four -> af.debug($2)
+	| four
+	;
+
+// conditional
+four
+	: four QUESTION four SOLIDUS four -> af.conditional($1, $3, $5)
 	| five
 	;
 
 // composition
 // B-combinator
 five
-	: five ARROW-OR-COMPOSE six -> af.compose($1, $3)
+	: five COLON six -> af.compose($1, $3)
 	| six
 	;
 	
@@ -142,8 +150,8 @@ object-entries
 	;
 
 object-entry
-	: lookup ARROW-OR-COMPOSE full -> af.objectentry($1, $3, false)
-	| ten ARROW-OR-COMPOSE full -> af.objectentry($1, $3, true)
+	: lookup COLON full -> af.objectentry($1, $3, false)
+	| ten COLON full -> af.objectentry($1, $3, true)
 	| lookup -> af.shortentry($1)
 	;
 
@@ -158,9 +166,9 @@ array-contents
 	;
 
 lambda
-	: LSQUARE arg-list ARROW-OR-COMPOSE sequence RSQUARE -> af.fn($2, $4)
+	: LSQUARE arg-list COLON sequence RSQUARE -> af.fn($2, $4)
 	| LSQUARE arg-list COMMA sequence RSQUARE -> af.lambda($2, $4)
-	| LSQUARE ARROW-OR-COMPOSE sequence RSQUARE -> af.thunk($3)
+	| LSQUARE COLON sequence RSQUARE -> af.thunk($3)
 	;
 
 arg-list

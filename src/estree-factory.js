@@ -38,6 +38,8 @@ const object_expression = properties => ({ type: 'ObjectExpression', properties 
 
 const property = (key, value, computed, shorthand) => ({ type: 'Property', key, value, computed, shorthand, kind: 'init' })
 
+const conditional_expression = (test, consequent, alternate) => ({ type: 'ConditionalExpression', test, consequent, alternate })
+
 module.exports = {
 	literal,
 	identifier,
@@ -56,5 +58,6 @@ module.exports = {
 	sequence_expression,
 	spread_element,
 	object_expression,
-	property
+	property,
+	conditional_expression
 }

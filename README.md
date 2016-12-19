@@ -5,11 +5,11 @@ A Javascript dialect for modern functional programming.
 
 * [Get](#get)
 * [Hello World](#hello-world)
+* [Purpose](#purpose)
 * [Ecosystem](#ecosystem)
 * [Files](#files)
 * [Scripts](#scripts)
 * [Usage](#usage)
-* [Goals](#goals)
 * [Language](#language)
 * [Javascript FFI](#javascript-ffi)
 * [TODO](#todo)
@@ -45,6 +45,12 @@ $ lm e hello.lm
   'Hello, world!'
 ```
 
+## Purpose
+Lambdant is a Javascript dialect that...
+- is geared towards general-purpose functional programming
+- encourages purity but does not require it
+- provides easy and intuitive Javascript ffi
+
 ## Ecosystem
 - [stdlm](https://github.com/edge/stdlm) - standard library
 - [lambdant-loader](https://github.com/edge/lambdant-loader) - webpack loader
@@ -62,8 +68,8 @@ $ lm e hello.lm
 
 ## Scripts
 
-`make build` generates ./src/parser.js from ./lang/grammar.g and ./lang/lexer.l.  
-`make suite` evaluates each of the scripts in ./examples.  
+`make build` generates `./src/parser.js` from `./lang/grammar.g` and `./lang/lexer.l`.  
+`make suite` evaluates each of the scripts in `./examples`.  
 
 ## Usage
 
@@ -112,12 +118,6 @@ $ lm c- file.lm # compile file.lm without implicit prelude
 $ lm e- file.lm # evaluate file.lm without implicit prelude
 $ lm a- 'code' # evaluate code without implicit prelude
 ```
-
-## Goals
-- mutation allowed, but discouraged
-- easy and intuitive javascript ffi by producing javascript code and using curry/uncurry
-- promote functional programming techniques
-- general-purpose functional scripting
 
 ## Language
 

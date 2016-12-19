@@ -80,9 +80,9 @@ const gen = node => {
 		case 'DECLARE':
 			return variable_declaration(gen(node.id), null)
 		case 'DEFINE':
-			return variable_declaration(gen(node.id), gen(node.expr))
+			return variable_declaration(gen(node.pattern), gen(node.expr))
 		case 'ASSIGN':
-			return assignment_expression(gen(node.id), gen(node.expr))
+			return assignment_expression(gen(node.pattern), gen(node.expr))
 		case 'LAMBDA': {
 			const body_ast = gen(node.expr)
 			return arrow_function_expression(
@@ -107,7 +107,8 @@ const gen = node => {
 
 				for (let i = 0; i < exprs.length - 1; i++) {
 					const ast = gen(exprs[i])
-					es_asts.push(ast.type === 'CallExpression'
+					const ast_type = ast.type
+					es_asts.push(ast_type === 'CallExpression' || ast_type === 'AssignmentExpression'
 						? expression_statement(ast)
 						: ast
 					)

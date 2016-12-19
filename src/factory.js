@@ -97,14 +97,14 @@ const af = {
 		type: 'DECLARE',
 		id
 	}),
-	define: (id, expr) => ({
+	define: (pattern, expr) => ({
 		type: 'DEFINE',
-		id,
+		pattern,
 		expr
 	}),
-	assign: (id, expr) => ({
+	assign: (pattern, expr) => ({
 		type: 'ASSIGN',
-		id,
+		pattern,
 		expr
 	}),
 	access: (object, property, computed) => ({

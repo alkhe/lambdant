@@ -40,10 +40,15 @@ declaration
 
 definition
 	: LOCAL lookup EQUALS full -> af.define($2, $4)
+	| LOCAL object EQUALS full -> af.define($2, $4)
+	| LOCAL array EQUALS full -> af.define($2, $4)
 	;
 
 assignment
-	: memory EQUALS full -> af.assign($1, $3)
+	: lookup EQUALS full -> af.assign($1, $3)
+	| member EQUALS full -> af.assign($1, $3)
+	| object EQUALS full -> af.assign($1, $3)
+	| array EQUALS full -> af.assign($1, $3)
 	;
 
 // base expression, zero precedence
@@ -101,13 +106,13 @@ nine
 	| lambda
 	| array
 	| object
-	| memory
+	| lookup
+	| member
 	| ten
 	;
 
-memory
-	: lookup
-	| nine DOT lookup -> af.access($1, $3, false)
+member
+	: nine DOT lookup -> af.access($1, $3, false)
 	| nine DOT ten -> af.access($1, $3, true)
 	;
 
@@ -148,12 +153,12 @@ array-contents
 	;
 
 lambda
-	: LSQUARE id-list ARROW-OR-COMPOSE sequence RSQUARE -> af.fn($2, $4)
-	| LSQUARE id-list COMMA sequence RSQUARE -> af.lambda($2, $4)
+	: LSQUARE arg-list ARROW-OR-COMPOSE sequence RSQUARE -> af.fn($2, $4)
+	| LSQUARE arg-list COMMA sequence RSQUARE -> af.lambda($2, $4)
 	| LSQUARE ARROW-OR-COMPOSE sequence RSQUARE -> af.thunk($3)
 	;
 
-id-list
-	: id-list lookup -> $1.concat($2)
+arg-list
+	: arg-list lookup -> $1.concat($2)
 	| lookup -> [$1]
 	;

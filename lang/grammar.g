@@ -91,7 +91,13 @@ six
 // calls
 seven
 	: seven eight -> af.expr($1, $2)
+	| seven LPAREN call-list RPAREN -> af.multexpr($1, $3)
 	| eight
+	;
+
+call-list
+	: call-list COMMA full -> $1.concat($3)
+	| full COMMA full -> [$1, $3]
 	;
 
 t-comb

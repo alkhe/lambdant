@@ -176,12 +176,25 @@ console.log! // (newline)
 ### Lambdas
 [`add`](https://github.com/edge/stdlm#add)
 ```js
+# single lambda
 [x: add 2 x] 3 -> 5
+
+# nested lambda
 [x:[y: add x y]] 2 3 -> 5
+
+# nested lambda shorthand
 [x y: add x y] 2 3 -> 5
-[: log 'in a thunk!']! // in a thunk!
+
+# multivariate lambda
+[x y, add x y] (2, 3) -> 5
+
+# thunk
+[:'in a thunk!']! -> in a thunk!
+
+# noop
 [:] -> (noop)
-[x y, add x y] !! <1, 2> -> 3
+
+# destructuring lambda
 [{ add } <a, b>: add a b] $ <1, 2> -> 3
 ```
 
@@ -203,15 +216,17 @@ console.log!
 
 ### Declaration
 ```js
-@declared
+@some_var
 ```
 
 ### Definition
 [`add`](https://github.com/edge/stdlm#add)
 ```js
+# basic
 @name = 'John';
 name -> 'John'
 
+# destructuring
 @{ x } = { x: 40 };
 @<y> = <2>;
 add x y -> 42
@@ -219,20 +234,24 @@ add x y -> 42
 
 ### Assignment
 ```js
+# basic
 @w;
 w = 5;
 w -> 5
 
+# destructuring
 @a; @b;
 <a, b> = <1, 2>;
 add a b -> 3;
 
+# destructuring
 @obj = { a: 5 };
 obj.a = 42;
 obj.a -> 42
 ```
 
 ### Conditionals
+Conditionals take the form of `test ? consequent : alternate`. If you need to make multiple statements within a branch, wrap the branch in an immediately-invoked thunk.
 [`is`](https://github.com/edge/stdlm#is)
 [`not`](https://github.com/edge/stdlm#not)
 [`mod`](https://github.com/edge/stdlm#mod)
@@ -243,7 +262,10 @@ obj.a -> 42
 
 ### Members
 ```js
+# native access
 Date.now! -> 1481926731041
+
+# computed access
 <1, 9, 8, 4>.(2) -> 8
 ```
 
@@ -271,6 +293,7 @@ The standard library provides currying and uncurrying facilities up to 5-arity.
 [`curry3`](https://github.com/edge/stdlm#curry3)
 ```js
 uncurry2 [x y: add x y] !! <1, 2> -> 3
+uncurry2 [x y: add x y] (1, 2) -> 3
 curry3 Date.UTC 1982 9 1 -> 402278400000
 ((Array 5).fill 0).map (uncurry2 [- i: i]) -> [0, 1, 2, 3, 4]
 ```
@@ -334,7 +357,9 @@ process.exit!
 Applies a sequence to a multivariate function. (Spreads an array into a function.)  
 Useful for Javascript FFI.
 ```js
-Date.UTC !! <1982, 9, 1> -> 402278400000
+@date_args = <1982, 9, 1>;
+Date.UTC !! date_args -> 402278400000
+Date.UTC(1982, 9, 1) -> 402278400000
 ```
 
 ## TODO

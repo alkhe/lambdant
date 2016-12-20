@@ -65,6 +65,10 @@ const gen = node => {
 			const fn_ast = gen(node.fn)
 			return (fn_ast.type === 'ID' && fn_ast.name === 'new' ? new_expression : call_expression)(fn_ast, [gen(node.arg)])
 		}
+		case 'MULTEXPR': {
+			const fn_ast = gen(node.fn)
+			return (fn_ast.type === 'ID' && fn_ast.name === 'new' ? new_expression : call_expression)(fn_ast, node.args.map(gen))
+		}
 		case 'BANGEXPR':
 			return call_expression(
 				gen(node.fn),

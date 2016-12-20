@@ -1,7 +1,7 @@
 @write = process.stdout.write : String;
 write 'This will not return: ';
-write [: 42;]!;
+write [:42;]!;
 console.log!;
 write 'This will return: ';
-write [: 42]!;
+write [:42]!;
 console.log!

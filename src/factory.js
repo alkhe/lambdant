@@ -24,6 +24,11 @@ const af = {
 		fn,
 		arg
 	}),
+	multexpr: (fn, args) => ({
+		type: 'MULTEXPR',
+		fn,
+		args
+	}),
 	bangexpr: fn => ({
 		type: 'BANGEXPR',
 		fn

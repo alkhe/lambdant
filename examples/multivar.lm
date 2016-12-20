@@ -1,3 +1,4 @@
 @date_args = <1982, 9, 1>;
 & Date.UTC !! date_args;
-& $.curry3 Date.UTC 1982 9 1
+& $.curry3 Date.UTC 1982 9 1;
+& Date.UTC(1982, 9, 1);

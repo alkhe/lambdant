@@ -252,7 +252,7 @@ obj.a -> 42
 ```
 
 ### Conditionals
-Conditionals take the form of `test ? consequent : alternate`. If you need to make multiple statements within a branch, wrap the branch in an immediately-invoked thunk.
+Conditionals take the form of `test ? consequent / alternate`. If you need to make multiple statements within a branch, wrap the branch in an immediately-invoked thunk.
 [`is`](https://github.com/edge/stdlm#is)
 [`not`](https://github.com/edge/stdlm#not)
 [`mod`](https://github.com/edge/stdlm#mod)

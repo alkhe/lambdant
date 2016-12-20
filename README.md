@@ -54,6 +54,7 @@ Lambdant is a Javascript dialect that...
 ## Ecosystem
 - [stdlm](https://github.com/edge/stdlm) - standard library
 - [lambdant-loader](https://github.com/edge/lambdant-loader) - webpack loader
+- [cycle-scripts-lm-webpack](https://github.com/edge/cycle-scripts-lm-webpack) - Lambdant + ES6 + Webpack flavor for create-cycle-app
 
 ## Files
 
